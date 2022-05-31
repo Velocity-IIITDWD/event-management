@@ -10,7 +10,7 @@ function Tabs({ isLeaderboardActive, setIsLeaderboardActive }) {
   }
 
   return (
-    <div className='tabs mt-4 w-full px-5'>
+    <div className='tabs mt-8 mb-12 w-full px-5'>
       <button
         className={`tab tab-lifted w-1/2 ${
           !isLeaderboardActive && 'tab-active'

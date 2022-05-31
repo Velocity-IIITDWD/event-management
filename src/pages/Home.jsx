@@ -1,4 +1,7 @@
-import Tabs from '../components/Navbar/Tabs'
+import Tabs from '../components/Nav/Tabs'
+import Events from '../components/Events'
+import Leaderboard from '../components/Leaderboard/Leaderboard'
+import Footer from '../components/Footer'
 
 import { useState } from 'react'
 
@@ -11,6 +14,13 @@ function Home() {
         isLeaderboardActive={isLeaderboardActive}
         setIsLeaderboardActive={setIsLeaderboardActive}
       />
+
+      {!isLeaderboardActive && (
+        <>
+          <Events /> <Footer />
+        </>
+      )}
+      {isLeaderboardActive && <Leaderboard />}
     </>
   )
 }

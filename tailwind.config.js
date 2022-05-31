@@ -8,5 +8,5 @@ module.exports = {
       'white-secondary': '#EDF2F4',
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [require('daisyui'), require('flowbite/plugin')],
 }
