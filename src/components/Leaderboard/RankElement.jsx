@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 function RankElement({
   rank = 1,
   points = '',
@@ -7,6 +9,7 @@ function RankElement({
   id = '',
   description = '',
   lastPoints = 'Hidden',
+  registrationNumber = '',
 }) {
   return (
     <tr>
@@ -14,7 +17,16 @@ function RankElement({
       <td>
         <div className='flex items-center space-x-3'>
           <div>
-            <div className='font-bold btn btn-ghost'>{name}</div>
+            <Link
+              to={'/timeline/' + registrationNumber}
+              className='font-bold btn btn-ghost'
+            >
+              {name}
+            </Link>
+
+            <span className='badge badge-ghost badge-sm'>
+              {registrationNumber}
+            </span>
           </div>
         </div>
       </td>
@@ -25,7 +37,12 @@ function RankElement({
       </td>
       <td>{points}</td>
       <th>
-        <button className='btn btn-ghost btn-xs'>Timeline</button>
+        <Link
+          to={'/timeline/' + registrationNumber}
+          className='btn btn-ghost btn-xs'
+        >
+          Timeline
+        </Link>
       </th>
     </tr>
   )

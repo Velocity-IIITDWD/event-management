@@ -3,9 +3,11 @@ import React, { createContext, useState } from 'react'
 const authContext = createContext({
   isAuthenticated: false,
   token: null,
+  type: 'student',
   newToken: () => {},
   login: () => {},
   logout: () => {},
+  setType: () => {},
 })
 
 export { authContext }
@@ -13,6 +15,7 @@ export { authContext }
 const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [token, setToken] = useState(null)
+  const [type, setType] = useState('student')
 
   const login = () => {
     setIsAuthenticated(true)
@@ -32,9 +35,11 @@ const AuthProvider = ({ children }) => {
       value={{
         isAuthenticated,
         token,
+        type,
         login,
         logout,
         newToken,
+        setType,
       }}
     >
       {children}

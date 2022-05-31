@@ -23,6 +23,7 @@ function Leaderboard() {
                 points='200'
                 id=''
                 lastPoints='50'
+                registrationNumber='21BCS085'
               />
             </tbody>
           </table>

@@ -2,8 +2,8 @@ import { Link } from 'react-router-dom'
 
 function LoginSignup() {
   return (
-    <div className='my-5 px-10'>
-      <div className='alert shadow-md bg-slate-200'>
+    <div className='my-5 px-10 '>
+      <div className='alert shadow-md bg-slate-200 lg:px-20'>
         <div>
           <span className='text-3xl '>&#127873;</span>
           <div className='ml-2'>

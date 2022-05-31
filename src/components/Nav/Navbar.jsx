@@ -12,7 +12,7 @@ function Navbar() {
       <div className='flex-none'>
         <label className='btn btn-ghost btn-circle avatar'>
           <div className='w-10 rounded-full'>
-            <img src='logo.svg' alt='velocity logo' />
+            <img src='./logo.svg' alt='Velocity Logo' />
           </div>
         </label>
       </div>
