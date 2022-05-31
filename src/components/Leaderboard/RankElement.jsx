@@ -24,9 +24,12 @@ function RankElement({
               {name}
             </Link>
 
-            <span className='badge badge-ghost badge-sm'>
+            <Link
+              to={'/timeline/' + registrationNumber}
+              className='badge badge-ghost badge-sm'
+            >
               {registrationNumber}
-            </span>
+            </Link>
           </div>
         </div>
       </td>

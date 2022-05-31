@@ -10,11 +10,11 @@ function Navbar() {
   return (
     <nav className='navbar bg-base-100 px-10'>
       <div className='flex-none'>
-        <label className='btn btn-ghost btn-circle avatar'>
+        <Link to={'/'} className='btn btn-ghost btn-circle avatar'>
           <div className='w-10 rounded-full'>
             <img src='./logo.svg' alt='Velocity Logo' />
           </div>
-        </label>
+        </Link>
       </div>
       <div className='flex-1'>
         <Link to={'/'} className='btn btn-ghost normal-case text-xl'>

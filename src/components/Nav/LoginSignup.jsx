@@ -15,10 +15,13 @@ function LoginSignup() {
           </div>
         </div>
         <div className='flex-none'>
-          <Link to={'/login'} className='btn btn-sm focus:btn-outline'>
+          <Link to={'/login'} className='btn btn-sm'>
             Login
           </Link>
-          <Link to={'/signup'} className='btn btn-sm btn-outline opacity-90 '>
+          <Link
+            to={'/signup'}
+            className='btn btn-sm btn-outline focus:btn-outline opacity-90 '
+          >
             Sign-Up
           </Link>
         </div>
