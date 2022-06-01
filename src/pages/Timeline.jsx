@@ -30,7 +30,7 @@ function Timeline() {
         <TimelineComponent
           timestamp={timestamp}
           points={50}
-          heading='Signup Bonus'
+          heading='Signup Bonus Phew'
           description='Received signup bonus'
         />
         <TimelineComponent

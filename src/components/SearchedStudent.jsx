@@ -1,6 +1,8 @@
 import React from 'react'
 
-function Signup() {
+import { Link } from 'react-router-dom'
+
+function SearchedStudent() {
   return (
     <div className='px-5'>
       <form className='border border-base-200 p-10 my-10 w-full md:w-4/6 mx-auto rounded-lg shadow-md'>
@@ -87,16 +89,17 @@ function Signup() {
           type='submit'
           className='text-white bg-blue-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
         >
-          SignUp
+          Update
         </button>
 
-        <span className='mt-3 block text-xs opacity-90 text-slate-600 rounded-lg width-auto'>
-          Registration Number already taken? or if you have any other doubts,
-          Contact Team Velocity or 21BCS085
-        </span>
+        <Link
+          to='/admin/students/managecreds/:registrationNumber'
+          className='text-white bg-blue-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ml-5'
+        >
+          Manage Creds
+        </Link>
       </form>
     </div>
   )
 }
-
-export default Signup
+export default SearchedStudent

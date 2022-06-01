@@ -5,7 +5,8 @@ import { useContext } from 'react'
 import { authContext } from '../../store/authContext'
 
 function Navbar() {
-  const { isAuthenticated } = useContext(authContext)
+  const { isAuthenticated, type } = useContext(authContext)
+  const registrationNumber = '21bds069'
 
   return (
     <nav className='navbar bg-base-100 px-10'>
@@ -21,9 +22,13 @@ function Navbar() {
           Velocity Events
         </Link>
       </div>
-
+      {isAuthenticated && type === 'admin' && (
+        <Link to={'/admin'} className='btn btn-ghost normal-case text-xl'>
+          Admin
+        </Link>
+      )}
       {isAuthenticated && (
-        <div className='flex-none'>
+        <Link to={'/timeline/' + registrationNumber} className='flex-none'>
           <label tabIndex='0' className='btn btn-ghost btn-circle avatar'>
             <div className='w-10 rounded-full'>
               <img
@@ -32,7 +37,7 @@ function Navbar() {
               />
             </div>
           </label>
-        </div>
+        </Link>
       )}
     </nav>
   )
