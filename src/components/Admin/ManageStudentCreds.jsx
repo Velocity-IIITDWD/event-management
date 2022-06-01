@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 
 import ManageCredComponent from './ManageCredComponent'
 
-function ManageCreds() {
+function ManageStudentCreds() {
   return (
     <div>
       <div className='mt-10 px-20'>
@@ -25,4 +25,4 @@ function ManageCreds() {
   )
 }
 
-export default ManageCreds
+export default ManageStudentCreds

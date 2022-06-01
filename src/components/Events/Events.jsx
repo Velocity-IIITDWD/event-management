@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { Link } from 'react-router-dom'
+
 function Events() {
   const EVENTS = [
     {
@@ -32,7 +34,12 @@ function Events() {
             <h2 className='card-title'>{event.title}</h2>
             <p>{event.description}</p>
             <div className='card-actions justify-end mt-5'>
-              <button className='btn btn-accent btn-outline'>Register</button>
+              <Link
+                to={'/confirm-registration/:eventId'}
+                className='btn btn-accent btn-outline'
+              >
+                Register
+              </Link>
             </div>
           </div>
         </div>

@@ -1,5 +1,5 @@
 import Tabs from '../components/Nav/Tabs'
-import Events from '../components/Events'
+import Events from '../components/Events/Events'
 import Leaderboard from '../components/Leaderboard/Leaderboard'
 import Footer from '../components/Footer'
 
