@@ -232,13 +232,3 @@ exports.deleteCreds = async (req, res, next) => {
     next(err)
   }
 }
-
-/*
-
-WORKING ON DELETE CREDS ENDPOINT, TACKLE ERROR 
-
-    "message": "Student validation failed: totalCreds: Cast to Number failed for value \"NaN\" (type number) at path \"totalCreds\""
-
-    
-
-*/

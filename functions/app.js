@@ -16,17 +16,24 @@ app.use((req, res, next) => {
   next()
 })
 
+const isAuth = require('./middlewares/isAuth')
+const isAdmin = require('./middlewares/isAdmin')
+
 const eventRoutes = require('./routes/events')
 const studentRoutes = require('./routes/students')
 const publicRoutes = require('./routes/public')
 const registrationRoutes = require('./routes/registrations')
+const authRoutes = require('./routes/auth')
 
 const errorHandler = require('./middlewares/errorHandler')
 
-app.use('/*events', eventRoutes)
-app.use('/*students', studentRoutes)
 app.use('/*public', publicRoutes)
-app.use('/*registrations', registrationRoutes)
+app.use('/*auth', authRoutes)
+
+app.use('/*registrations', isAuth, registrationRoutes)
+
+app.use('/*events', isAdmin, eventRoutes)
+app.use('/*students', isAdmin, studentRoutes)
 
 // 404 handler
 app.use(errorHandler.get404)
