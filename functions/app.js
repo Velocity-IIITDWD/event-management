@@ -24,6 +24,8 @@ const studentRoutes = require('./routes/students')
 const publicRoutes = require('./routes/public')
 const registrationRoutes = require('./routes/registrations')
 const authRoutes = require('./routes/auth')
+const credsRoutes = require('./routes/creds')
+const claimRoutes = require('./routes/claim')
 
 const errorHandler = require('./middlewares/errorHandler')
 
@@ -31,7 +33,9 @@ app.use('/*public', publicRoutes)
 app.use('/*auth', authRoutes)
 
 app.use('/*registrations', isAuth, registrationRoutes)
+app.use('/*claim', isAuth, claimRoutes)
 
+app.use('/*creds/', isAdmin, credsRoutes)
 app.use('/*events', isAdmin, eventRoutes)
 app.use('/*students', isAdmin, studentRoutes)
 
