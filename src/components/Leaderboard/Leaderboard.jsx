@@ -39,44 +39,46 @@ function Leaderboard() {
   return (
     <>
       <div>
-        {students.length === 0 && (
+        {students.length === 0 ? (
           <div className='my-20 flex justify-center items-center'>
             <h1>No students signed up yet. </h1>
           </div>
+        ) : (
+          <div className='overflow-x-auto w-5/6 mx-auto'>
+            <table className='table w-full'>
+              <thead>
+                <tr>
+                  <th>Rank</th>
+                  <th>Name</th>
+                  <th>Latest Points</th>
+                  <th>Total Points</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                {students.map((student, index) => {
+                  return (
+                    <RankElement
+                      rank={index + 1}
+                      name={student.name}
+                      description={
+                        student.creds[
+                          student.creds.length - 1
+                        ].description.slice(0, 22) + '..'
+                      }
+                      points={student.totalCreds}
+                      key={student.registrationNumber}
+                      lastPoints={
+                        student.creds[student.creds.length - 1].points
+                      }
+                      registrationNumber={student.registrationNumber}
+                    />
+                  )
+                })}
+              </tbody>
+            </table>
+          </div>
         )}
-        <div className='overflow-x-auto w-5/6 mx-auto'>
-          <table className='table w-full'>
-            <thead>
-              <tr>
-                <th>Rank</th>
-                <th>Name</th>
-                <th>Latest Points</th>
-                <th>Total Points</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((student, index) => {
-                return (
-                  <RankElement
-                    rank={index + 1}
-                    name={student.name}
-                    description={
-                      student.creds[student.creds.length - 1].description.slice(
-                        0,
-                        22
-                      ) + '..'
-                    }
-                    points={student.totalCreds}
-                    key={student.registrationNumber}
-                    lastPoints={student.creds[student.creds.length - 1].points}
-                    registrationNumber={student.registrationNumber}
-                  />
-                )
-              })}
-            </tbody>
-          </table>
-        </div>
       </div>
 
       <div className='btn-group grid grid-cols-2 w-4/6 md:w-1/2 mx-auto my-10'>
