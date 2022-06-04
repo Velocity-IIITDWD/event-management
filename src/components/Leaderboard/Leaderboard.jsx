@@ -84,14 +84,14 @@ function Leaderboard() {
       {students.length > 0 && (
         <div className='btn-group grid grid-cols-2 w-4/6 md:w-1/2 mx-auto my-10'>
           <button
-            className={`btn btn-outline ${page < 2 && 'btn-disabled'}`}
+            className={`btn ${page < 2 ? 'btn-disabled' : 'btn-outline '}`}
             onClick={prevPage}
           >
             Previous page
           </button>
           <button
-            className={`btn btn-outline ${
-              page >= totalPages && 'btn-disabled'
+            className={`btn ${
+              page >= totalPages ? 'btn-disabled' : 'btn-outline '
             }`}
             onClick={nextPage}
           >
