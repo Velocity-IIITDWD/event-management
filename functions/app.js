@@ -25,7 +25,7 @@ const publicRoutes = require('./routes/public')
 const registrationRoutes = require('./routes/registrations')
 const authRoutes = require('./routes/auth')
 const credsRoutes = require('./routes/creds')
-const claimRoutes = require('./routes/claim')
+const qrcodeRoutes = require('./routes/qrcode')
 
 const errorHandler = require('./middlewares/errorHandler')
 
@@ -33,7 +33,7 @@ app.use('/*public', publicRoutes)
 app.use('/*auth', authRoutes)
 
 app.use('/*registrations', isAuth, registrationRoutes)
-app.use('/*claim', isAuth, claimRoutes)
+app.use('/*qrcodes', isAuth, qrcodeRoutes)
 
 app.use('/*creds/', isAdmin, credsRoutes)
 app.use('/*events', isAdmin, eventRoutes)

@@ -5,9 +5,14 @@ exports.getLeaderBoard = async (req, res, next) => {
   const perPage = 15
 
   try {
-    const totalStudents = await Student.find().countDocuments() // count documents
-    const students = await Student.find()
+    const totalStudents = await Student.find({
+      type: 'student',
+    }).countDocuments() // count documents
+    const students = await Student.find({
+      type: 'student',
+    })
       .sort({ totalCreds: -1 })
+
       .skip((page - 1) * perPage)
       .limit(perPage)
       .select('-mobileNumber')

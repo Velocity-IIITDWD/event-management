@@ -53,6 +53,7 @@ const studentSchema = new Schema(
     type: {
       type: String,
       default: 'student',
+      isRequired: true,
     },
   },
   {

@@ -36,10 +36,9 @@ exports.claim = async (req, res, next) => {
       timestamp: creds.timestamp,
     })
 
-    student.totalPoints += creds.points
+    student.totalCreds += creds.points
 
     await student.save()
-
     await creds.save()
 
     res.status(200).json({ message: 'Creds claimed!', student, creds })

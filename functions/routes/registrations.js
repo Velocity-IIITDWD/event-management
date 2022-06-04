@@ -6,7 +6,7 @@ require('../db/db')
 const registrationController = require('../controllers/registrations')
 
 router.get('/:eventId', registrationController.registerEvent)
-router.get('/', registrationController.registrations)
-router.get('/verify', registrationController.isRegistered)
+router.get('/view/:eventId', registrationController.registrations)
+router.get('/verify/:eventId', registrationController.isRegistered)
 
 module.exports = router
