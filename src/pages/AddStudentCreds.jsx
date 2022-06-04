@@ -18,18 +18,21 @@ function AddStudentCreds() {
       return
     }
 
-    const response = await fetch(`/api/students/creds/${registrationNumber}`, {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        title,
-        description,
-        points: parseInt(points),
-      }),
-    })
+    const response = await fetch(
+      `/.netlify/functions/app/students/creds/${registrationNumber}`,
+      {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          points: parseInt(points),
+        }),
+      }
+    )
 
     const data = await response.json()
 

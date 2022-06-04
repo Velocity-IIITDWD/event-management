@@ -10,11 +10,14 @@ function ManageStudentCreds() {
   const [creds, setCreds] = useState([])
 
   const fetchCreds = useCallback(async () => {
-    const response = await fetch(`/api/students/${registrationNumber}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
+    const response = await fetch(
+      `/.netlify/functions/app/students/${registrationNumber}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    )
     const data = await response.json()
     setCreds(data.student.creds.reverse())
   }, [registrationNumber, setCreds])

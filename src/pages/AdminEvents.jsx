@@ -6,7 +6,7 @@ function Events() {
   const [events, setEvents] = useState([])
 
   const fetchData = useCallback(async () => {
-    const response = await fetch('/api/events', {
+    const response = await fetch('/.netlify/functions/app/events', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -31,7 +31,7 @@ function Events() {
       return
     }
 
-    const response = await fetch(`/api/events/${id}`, {
+    const response = await fetch(`/.netlify/functions/app/events/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

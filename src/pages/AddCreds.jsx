@@ -16,7 +16,7 @@ function AddCreds() {
       return
     }
 
-    const response = await fetch(`/api/creds/add`, {
+    const response = await fetch(`/.netlify/functions/app/creds/add`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

@@ -9,7 +9,7 @@ function Events() {
   const { studentId } = useContext(authContext)
 
   const fetchData = useCallback(async () => {
-    const response = await fetch('/api/public/events')
+    const response = await fetch('/.netlify/functions/app/public/events')
     const data = await response.json()
 
     if (response.status === 200) {

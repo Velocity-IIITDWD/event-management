@@ -49,7 +49,10 @@ function Login() {
     }
 
     try {
-      const response = await fetch('/api/auth/login', options)
+      const response = await fetch(
+        '/.netlify/functions/app/auth/login',
+        options
+      )
       const data = await response.json()
 
       if (response.status === 200) {

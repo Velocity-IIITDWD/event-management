@@ -8,7 +8,9 @@ function Leaderboard() {
   const [totalPages, setTotalPages] = useState(1)
 
   const fetchData = async page => {
-    const response = await fetch('/api/public/leaderboard/?page=' + page)
+    const response = await fetch(
+      '/.netlify/functions/app/public/leaderboard/?page=' + page
+    )
     const data = await response.json()
 
     if (response.status === 200) {

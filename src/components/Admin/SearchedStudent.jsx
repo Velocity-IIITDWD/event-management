@@ -41,7 +41,7 @@ function SearchedStudent({ student }) {
     }
 
     const response = await fetch(
-      `/api/students/${student.registrationNumber}`,
+      `/.netlify/functions/app/students/${student.registrationNumber}`,
       options
     )
     const data = await response.json()
@@ -68,7 +68,7 @@ function SearchedStudent({ student }) {
       },
     }
     const response = await fetch(
-      `/api/students/${student.registrationNumber}`,
+      `/.netlify/functions/app/students/${student.registrationNumber}`,
       options
     )
     const data = await response.json()

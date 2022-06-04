@@ -4,7 +4,8 @@ import { useState, useEffect, useCallback } from 'react'
 function EventRegistrations() {
   const eventId = useLocation().pathname.replace('/admin/registrations/', '')
   const domain = window.location.href.replace(useLocation().pathname, '')
-  const endpoint = domain + '/api/registrations/view/' + eventId
+  const endpoint =
+    domain + '/.netlify/functions/app/registrations/view/' + eventId
 
   const [registrations, setRegistrations] = useState([])
 

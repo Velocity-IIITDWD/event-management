@@ -10,11 +10,14 @@ function ManageStudents() {
   const searchStudent = async e => {
     e.preventDefault()
 
-    const response = await fetch(`/api/students/${registrationNumber}`, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
+    const response = await fetch(
+      `/.netlify/functions/app/students/${registrationNumber}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    )
 
     const data = await response.json()
 

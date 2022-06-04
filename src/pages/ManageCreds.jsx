@@ -6,7 +6,7 @@ function ManageCreds() {
   const [creds, setCreds] = useState([])
 
   const fetchData = useCallback(async () => {
-    const response = await fetch('/api/creds', {
+    const response = await fetch('/.netlify/functions/app/creds', {
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
       },
@@ -23,7 +23,7 @@ function ManageCreds() {
   }, [fetchData])
 
   const deleteCred = async id => {
-    const response = await fetch(`/api/creds/${id}`, {
+    const response = await fetch(`/.netlify/functions/app/creds/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,

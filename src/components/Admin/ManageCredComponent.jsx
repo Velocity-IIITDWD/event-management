@@ -6,7 +6,7 @@ function ManageCredComponent({ creds, registrationNumber }) {
 
   const handleDelete = useCallback(async () => {
     const response = await fetch(
-      `/api/students/creds/${registrationNumber}/${creds.key}`,
+      `/.netlify/functions/app/students/creds/${registrationNumber}/${creds.key}`,
       {
         method: 'DELETE',
         headers: {

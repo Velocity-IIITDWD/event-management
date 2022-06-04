@@ -54,7 +54,10 @@ function Signup() {
     }
 
     try {
-      const response = await fetch('/api/auth/signup', options)
+      const response = await fetch(
+        '/.netlify/functions/app/auth/signup',
+        options
+      )
       const data = await response.json()
 
       if (response.status > 200 && response.status < 300) {

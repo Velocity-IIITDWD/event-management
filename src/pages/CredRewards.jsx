@@ -13,7 +13,7 @@ function CredRewards() {
   const { registrationNumber } = useContext(authContext)
 
   const fetchData = useCallback(async () => {
-    const response = await fetch('/api/qrcodes/' + credId, {
+    const response = await fetch('/.netlify/functions/app/qrcodes/' + credId, {
       method: 'GET',
       headers: {
         Authorization: 'Bearer ' + localStorage.getItem('token'),

@@ -4,7 +4,7 @@ import { Navigate, useLocation } from 'react-router-dom'
 
 function NewEvent() {
   const domain = window.location.href.replace(useLocation().pathname, '')
-  const endpoint = domain + '/api/events/new'
+  const endpoint = domain + '/.netlify/functions/app/events/new'
 
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')

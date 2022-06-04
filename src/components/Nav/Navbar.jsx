@@ -14,7 +14,9 @@ function Navbar() {
       return
     }
 
-    const response = await fetch('/api/public/student/' + registrationNumber)
+    const response = await fetch(
+      '/.netlify/functions/app/public/student/' + registrationNumber
+    )
     const data = await response.json()
 
     if (response.status === 200) {

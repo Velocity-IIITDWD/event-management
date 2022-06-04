@@ -13,7 +13,9 @@ function ConfirmRegistration() {
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
 
   const fetchData = useCallback(async () => {
-    const response = await fetch('/api/public/events/' + eventId)
+    const response = await fetch(
+      '/.netlify/functions/app/public/events/' + eventId
+    )
     const data = await response.json()
 
     if (response.status === 200) {
@@ -30,13 +32,16 @@ function ConfirmRegistration() {
   }, [fetchData])
 
   const register = async e => {
-    const response = await fetch('/api/registrations/' + eventId, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
+    const response = await fetch(
+      '/.netlify/functions/app/registrations/' + eventId,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      }
+    )
 
     if (response.status > 200 && response.status < 300) {
       // console.log(data)
