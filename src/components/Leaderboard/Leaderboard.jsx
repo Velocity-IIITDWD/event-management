@@ -81,20 +81,24 @@ function Leaderboard() {
         )}
       </div>
 
-      <div className='btn-group grid grid-cols-2 w-4/6 md:w-1/2 mx-auto my-10'>
-        <button
-          className={`btn btn-outline ${page < 2 && 'btn-disabled'}`}
-          onClick={prevPage}
-        >
-          Previous page
-        </button>
-        <button
-          className={`btn btn-outline ${page >= totalPages && 'btn-disabled'}`}
-          onClick={nextPage}
-        >
-          Next
-        </button>
-      </div>
+      {students.length > 0 && (
+        <div className='btn-group grid grid-cols-2 w-4/6 md:w-1/2 mx-auto my-10'>
+          <button
+            className={`btn btn-outline ${page < 2 && 'btn-disabled'}`}
+            onClick={prevPage}
+          >
+            Previous page
+          </button>
+          <button
+            className={`btn btn-outline ${
+              page >= totalPages && 'btn-disabled'
+            }`}
+            onClick={nextPage}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </>
   )
 }
