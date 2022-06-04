@@ -39,6 +39,11 @@ function Leaderboard() {
   return (
     <>
       <div>
+        {students.length === 0 && (
+          <div className='my-20 flex justify-center items-center'>
+            <h1>No students signed up yet. </h1>
+          </div>
+        )}
         <div className='overflow-x-auto w-5/6 mx-auto'>
           <table className='table w-full'>
             <thead>

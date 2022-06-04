@@ -22,6 +22,11 @@ function Events() {
   }, [fetchData])
   return (
     <div className='px-5'>
+      {events.length === 0 && (
+        <div className='my-20 flex justify-center items-center'>
+          <h1>No events yet. </h1>
+        </div>
+      )}
       {events.map(event => (
         <div
           key={event._id}
