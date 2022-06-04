@@ -3,3 +3,7 @@
   base = '/'
   publish = '/build'
 
+[[redirects]]
+  from = '/api/*'
+  to = '/.netlify/functions/app'
+  status = 200
