@@ -113,7 +113,7 @@ exports.registrations = async (req, res, next) => {
       error.statusCode = 404
       return next(error)
     }
-    res.status(201).json({
+    res.status(200).json({
       message: 'Registrations Fetched',
       registrations: event.registrations,
     })

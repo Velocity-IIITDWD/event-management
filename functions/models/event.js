@@ -22,6 +22,7 @@ const eventSchema = new Schema(
     isRegistrationOpen: {
       type: Boolean,
       required: true,
+      default: true,
     },
     registrations: [
       {

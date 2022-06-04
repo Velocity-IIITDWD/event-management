@@ -1,19 +1,37 @@
 import { Link } from 'react-router-dom'
 
-import { useContext } from 'react'
+import { useContext, useEffect, useCallback, useState } from 'react'
 
 import { authContext } from '../../store/authContext'
 
 function Navbar() {
-  const { isAuthenticated, type } = useContext(authContext)
-  const registrationNumber = '21bds069'
+  const { isAuthenticated, type, registrationNumber } = useContext(authContext)
+
+  const [name, setName] = useState('')
+
+  const fetchData = useCallback(async () => {
+    if (!registrationNumber) {
+      return
+    }
+
+    const response = await fetch('/api/public/student/' + registrationNumber)
+    const data = await response.json()
+
+    if (response.status === 200) {
+      setName(data.student.name)
+    }
+  }, [registrationNumber])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
   return (
     <nav className='navbar bg-base-100 px-10'>
       <div className='flex-none'>
         <Link to={'/'} className='btn btn-ghost btn-circle avatar'>
           <div className='w-10 rounded-full'>
-            <img src='./logo.png' alt='Velocity Logo' />
+            <img src='logo.svg' alt='Velocity Logo' />
           </div>
         </Link>
       </div>
@@ -29,14 +47,11 @@ function Navbar() {
       )}
       {isAuthenticated && (
         <Link to={'/timeline/' + registrationNumber} className='flex-none'>
-          <label tabIndex='0' className='btn btn-ghost btn-circle avatar'>
-            <div className='w-10 rounded-full'>
-              <img
-                src='https://api.lorem.space/image/face?hash=33791'
-                alt='pfp'
-              />
+          <div className='avatar placeholder'>
+            <div className='bg-neutral-focus text-neutral-content rounded-full w-12 font-bold'>
+              <span>{name.slice(0, 1)}</span>
             </div>
-          </label>
+          </div>
         </Link>
       )}
     </nav>

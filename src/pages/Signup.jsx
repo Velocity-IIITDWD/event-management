@@ -1,9 +1,107 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 
 function Signup() {
+  const [alert, setAlert] = useState(null)
+
+  const [registrationNumber, setRegistrationNumber] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [name, setName] = useState('')
+  const [mobileNumber, setMobileNumber] = useState('')
+
+  const [signupSuccess, setSignupSuccess] = useState(false)
+
+  const signUpHandler = async e => {
+    e.preventDefault()
+
+    if (
+      registrationNumber.length === 0 ||
+      password.length === 0 ||
+      confirmPassword.length === 0 ||
+      name.length === 0 ||
+      mobileNumber.length === 0
+    ) {
+      setAlert(
+        'Please enter your registration number, password, name, mobile number and confirm password'
+      )
+      setTimeout(() => {
+        setAlert(null)
+      }, 3000)
+
+      return
+    }
+
+    if (password !== confirmPassword) {
+      setAlert('Password and confirm password do not match')
+      setTimeout(() => {
+        setAlert(null)
+      }, 3000)
+      return
+    }
+
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        registrationNumber,
+        password,
+        name,
+        mobileNumber,
+      }),
+    }
+
+    try {
+      const response = await fetch('/api/auth/signup', options)
+      const data = await response.json()
+
+      if (response.status > 200 && response.status < 300) {
+        setSignupSuccess(true)
+      } else {
+        setAlert(data.message)
+        setTimeout(() => {
+          setAlert(null)
+        }, 3000)
+      }
+    } catch (err) {
+      setAlert(err.message)
+      setTimeout(() => {
+        setAlert(null)
+      }, 3000)
+    }
+  }
+
   return (
     <div className='px-5'>
-      <form className='border border-base-200 p-10 my-10 w-full md:w-4/6 mx-auto rounded-lg shadow-md'>
+      {signupSuccess && <Navigate to='/login' />}
+
+      {alert && (
+        <div className='alert shadow mb-5'>
+          <div>
+            <svg
+              xmlns='http://www.w3.org/2000/svg'
+              fill='none'
+              viewBox='0 0 24 24'
+              className='stroke-info flex-shrink-0 w-6 h-6'
+            >
+              <path
+                strokeLinecap='round'
+                strokeLinejoin='round'
+                strokeWidth='2'
+                d='M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z'
+              ></path>
+            </svg>
+            <span>{alert}</span>
+          </div>
+        </div>
+      )}
+
+      <form
+        className='border border-base-200 p-10 my-10 w-full md:w-4/6 mx-auto rounded-lg shadow-md'
+        onSubmit={signUpHandler}
+      >
         <div className='mb-6'>
           <label
             htmlFor='name'
@@ -17,6 +115,10 @@ function Signup() {
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='name'
             required
+            value={name}
+            onChange={e => {
+              setName(e.target.value)
+            }}
           />
         </div>
         <div className='mb-6'>
@@ -32,6 +134,10 @@ function Signup() {
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='eg. 21bds069'
             required
+            value={registrationNumber}
+            onChange={e => {
+              setRegistrationNumber(e.target.value.trim())
+            }}
           />
         </div>
 
@@ -48,6 +154,10 @@ function Signup() {
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='+91 --'
             required
+            value={mobileNumber}
+            onChange={e => {
+              setMobileNumber(e.target.value.trim())
+            }}
           />
         </div>
 
@@ -64,6 +174,10 @@ function Signup() {
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='password'
             required
+            value={password}
+            onChange={e => {
+              setPassword(e.target.value.trim())
+            }}
           />
         </div>
 
@@ -80,6 +194,10 @@ function Signup() {
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='password'
             required
+            value={confirmPassword}
+            onChange={e => {
+              setConfirmPassword(e.target.value.trim())
+            }}
           />
         </div>
 

@@ -130,7 +130,7 @@ exports.deleteEvent = async (req, res, next) => {
 
 exports.removeRegistration = async (req, res, next) => {
   const eventId = req.params.eventId
-  const registrationNumber = req.params.registrationNumber
+  const registrationNumber = req.params.registrationNumber.toUpperCase()
 
   if (!registrationNumber) {
     const error = new Error('Registration Number required')
@@ -147,6 +147,12 @@ exports.removeRegistration = async (req, res, next) => {
     }
 
     const student = await Student.findOne({ registrationNumber })
+
+    if (!student) {
+      const error = new Error('Could not find student.')
+      error.statusCode = 404
+      return next(error)
+    }
 
     const studentId = student._id
 

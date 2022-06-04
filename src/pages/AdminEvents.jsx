@@ -1,23 +1,52 @@
-import React from 'react'
+import { useState, useEffect, useCallback } from 'react'
+
 import { Link } from 'react-router-dom'
 
 function Events() {
-  const EVENTS = [
-    {
-      title: 'CSS Battle(s)',
-      description: `CSS code-golfing game is here! Use your CSS skills to replicate
-    targets with smallest possible code. Feel free to check out the
-    targets below and put your CSS skills to test.`,
-      imgUrl: 'logo.svg',
-      id: Math.random(),
-    },
-    {
-      title: 'Extensive Workshop',
-      description: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore sint praesentium error mollitia similique, dolor excepturi, voluptatem sequi nostrum debitis id saepe sapiente maxime voluptatum quod, beatae ipsum adipisci est.`,
-      imgUrl: 'logo.svg',
-      id: Math.random(),
-    },
-  ]
+  const [events, setEvents] = useState([])
+
+  const fetchData = useCallback(async () => {
+    const response = await fetch('/api/events', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    const data = await response.json()
+
+    if (response.status === 200) {
+      setEvents(data.events)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
+  const deleteEvent = async id => {
+    const confirm = window.confirm(
+      'Are you sure you want to delete this event?'
+    )
+
+    if (!confirm) {
+      return
+    }
+
+    const response = await fetch(`/api/events/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+
+    const data = await response.json()
+
+    if (response.status === 200) {
+      fetchData()
+    } else {
+      alert('something went wrong. check console / network tab')
+      console.log(data)
+    }
+  }
 
   return (
     <>
@@ -28,9 +57,9 @@ function Events() {
         </Link>
       </div>
       <div className='px-5'>
-        {EVENTS.map(event => (
+        {events.map(event => (
           <div
-            key={event.id}
+            key={event._id}
             className='card lg:card-side bg-base-100 drop-shadow-2xl w-full md:w-4/6 mx-auto my-5'
           >
             <figure className='px-10'>
@@ -41,18 +70,25 @@ function Events() {
               <p>{event.description}</p>
               <div className='card-actions justify-end mt-5'>
                 <Link
-                  to={'/admin/events/edit/:eventId'}
+                  to={'/admin/events/edit/' + event._id}
                   className='btn btn-info btn-outline'
                 >
                   Edit
                 </Link>
                 <Link
-                  to={'/admin/registrations/:eventId'}
+                  to={'/admin/registrations/' + event._id}
                   className='btn btn-secondary btn-outline'
                 >
                   View Registrations
                 </Link>
-                <button className='btn btn-error btn-outline'>Delete</button>
+                <button
+                  className='btn btn-error btn-outline'
+                  onClick={() => {
+                    deleteEvent(event._id)
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>

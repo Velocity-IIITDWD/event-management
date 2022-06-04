@@ -1,13 +1,35 @@
-import React from 'react'
+import React, { useState, useCallback, useContext, useEffect } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
-function CredRewards({ points, description }) {
-  points = 50
-  description = 'Signup bonus'
-  let registrationNumber = 'undefined'
+import { authContext } from '../store/authContext'
 
-  const isInvalid = false
+function CredRewards() {
+  const credId = useLocation().pathname.split('/')[2]
+
+  const [creds, setCreds] = useState(null)
+  const [isInvalid, setIsInvalid] = useState(true)
+
+  const { registrationNumber } = useContext(authContext)
+
+  const fetchData = useCallback(async () => {
+    const response = await fetch('/api/qrcodes/' + credId, {
+      method: 'GET',
+      headers: {
+        Authorization: 'Bearer ' + localStorage.getItem('token'),
+      },
+    })
+    const data = await response.json()
+
+    if (response.status === 200) {
+      setCreds(data.creds)
+      setIsInvalid(false)
+    }
+  }, [credId])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
 
   return (
     <div className='w-full px-10 mt-10'>
@@ -20,10 +42,15 @@ function CredRewards({ points, description }) {
         <p className='mb-3 font-normal text-gray-700 dark:text-gray-400'>
           {!isInvalid && (
             <span>
-              You got {points} points for {description}
+              You got {creds.points} points for {creds.description}
             </span>
           )}
-          {isInvalid && <span>Invalid Code</span>}
+          {isInvalid && (
+            <span>
+              Something went wrong. Make sure you are logged in or else the code
+              is expired
+            </span>
+          )}
         </p>
         <Link
           to={'/timeline/' + registrationNumber}

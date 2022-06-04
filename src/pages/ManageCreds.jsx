@@ -1,24 +1,44 @@
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import { Link } from 'react-router-dom'
 
 function ManageCreds() {
-  const CREDS = [
-    {
-      title: 'Velocity Event Registration',
-      description: `Lorem ipsum dolor sit amet consectetur, adipisicing elit. Perspiciatis ex fugiat veniam, non quo voluptate. Laudantium, maiores eos. Doloremque, perspiciatis? Ipsam laudantium laborum aliquid corporis vitae dolore autem eaque veniam..`,
-      imgUrl: 'logo.svg',
-      points: 50,
-      id: Math.random(),
-    },
-    {
-      title: 'Attendance',
-      description: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore sint praesentium error mollitia similique, dolor excepturi, voluptatem sequi nostrum debitis id saepe sapiente maxime voluptatum quod, beatae ipsum adipisci est.`,
-      imgUrl: 'logo.svg',
-      points: 10,
-      id: Math.random(),
-    },
-  ]
+  const [creds, setCreds] = useState([])
+
+  const fetchData = useCallback(async () => {
+    const response = await fetch('/api/creds', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+    const data = await response.json()
+
+    if (response.status === 200) {
+      setCreds(data.creds.reverse())
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
+
+  const deleteCred = async id => {
+    const response = await fetch(`/api/creds/${id}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+
+    const data = await response.json()
+
+    if (response.status === 200) {
+      fetchData()
+    } else {
+      console.log(data)
+      alert('something went wrong, check log / network tab')
+    }
+  }
 
   return (
     <>
@@ -29,9 +49,9 @@ function ManageCreds() {
         </Link>
       </div>
       <div className='px-5'>
-        {CREDS.map(cred => (
+        {creds.map(cred => (
           <div
-            key={cred.id}
+            key={cred._id}
             className='card lg:card-side bg-base-100 drop-shadow-2xl w-full md:w-4/6 mx-auto my-5'
           >
             <div className='card-body'>
@@ -41,7 +61,17 @@ function ManageCreds() {
                 {cred.points} Points
               </span>
               <div className='card-actions justify-end mt-5'>
-                <button className='btn btn-error btn-outline'>Delete</button>
+                <Link to={`/admin/creds/qrcode/${cred._id}`}>
+                  <button className='btn btn-accent btn-outline'>
+                    QR Code
+                  </button>
+                </Link>
+                <button
+                  className='btn btn-error btn-outline'
+                  onClick={() => deleteCred(cred._id)}
+                >
+                  Delete
+                </button>
               </div>
             </div>
           </div>

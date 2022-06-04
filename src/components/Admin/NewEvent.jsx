@@ -1,9 +1,57 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+import { Navigate, useLocation } from 'react-router-dom'
 
 function NewEvent() {
+  const domain = window.location.href.replace(useLocation().pathname, '')
+  const endpoint = domain + '/api/events/new'
+
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [imgUrl, setImgUrl] = useState('')
+  const [points, setPoints] = useState('')
+  const [isRegistrationOpen, setIsRegistrationOpen] = useState(true)
+
+  const [registrationSuccess, setRegistrationSuccess] = useState(false)
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+
+    if (title && description && imgUrl && points) {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          title,
+          description,
+          imgUrl,
+          registrationPoints: parseInt(points),
+          isRegistrationOpen,
+        }),
+      })
+      const data = await response.json()
+
+      if (response.status >= 200 && response.status < 300) {
+        setRegistrationSuccess(true)
+        console.log(data)
+      } else {
+        setRegistrationSuccess(false)
+        console.log(data)
+        alert('something went wrong. check console / network tab')
+      }
+    }
+  }
+
   return (
     <div className='px-5'>
-      <form className='border border-base-200 p-10 my-10 w-full md:w-4/6 mx-auto rounded-lg shadow-md'>
+      {registrationSuccess && <Navigate to='/admin/events' />}
+      <form
+        className='border border-base-200 p-10 my-10 w-full md:w-4/6 mx-auto rounded-lg shadow-md'
+        onSubmit={handleSubmit}
+      >
         <div className='mb-6'>
           <label
             htmlFor='title'
@@ -15,8 +63,10 @@ function NewEvent() {
             type='text'
             id='title'
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
-            placeholder='heading'
+            placeholder='Title  '
             required
+            value={title}
+            onChange={e => setTitle(e.target.value)}
           />
         </div>
         <div className='mb-6'>
@@ -32,6 +82,8 @@ function NewEvent() {
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='drive.google.com/*'
             required
+            value={imgUrl}
+            onChange={e => setImgUrl(e.target.value)}
           />
         </div>
 
@@ -40,13 +92,16 @@ function NewEvent() {
             htmlFor='des'
             className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400'
           >
-            Your message
+            Description
           </label>
           <textarea
             id='des'
             rows='4'
             className='block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-gray-300 focus:border-gray-300 '
             placeholder='Event Desscription'
+            required
+            value={description}
+            onChange={e => setDescription(e.target.value)}
           ></textarea>
         </div>
 
@@ -63,6 +118,18 @@ function NewEvent() {
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='15'
             required
+            value={points}
+            onChange={e => setPoints(e.target.value)}
+          />
+        </div>
+
+        <div className='form-control w-full mb-5 flex flex-row'>
+          <span className=''>Registration On?</span>
+          <input
+            type='checkbox'
+            className='checkbox mx-5'
+            checked={isRegistrationOpen}
+            onChange={() => setIsRegistrationOpen(!isRegistrationOpen)}
           />
         </div>
 

@@ -1,17 +1,32 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import SearchedStudent from '../components/Admin/SearchedStudent'
 
 function ManageStudents() {
+  const [registrationNumber, setRegistrationNumber] = useState('')
+  const [searchSuccess, setSearchSuccess] = useState(false)
+  const [student, setStudent] = useState({})
+
+  const searchStudent = async e => {
+    e.preventDefault()
+
+    const response = await fetch(`/api/students/${registrationNumber}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+
+    const data = await response.json()
+
+    if (response.status === 200) {
+      setSearchSuccess(true)
+      setStudent(data.student)
+    }
+  }
+
   return (
     <div className='px-10 my-10'>
-      <form>
-        <label
-          htmlFor='search'
-          className='mb-2 text-sm font-medium text-gray-900 sr-only'
-        >
-          Your Email
-        </label>
+      <form onSubmit={searchStudent}>
         <div className='relative'>
           <div className='flex absolute inset-y-0 left-0 items-center pl-3 pointer-events-none'>
             <svg
@@ -36,16 +51,19 @@ function ManageStudents() {
             placeholder='Search Registration Number'
             required=''
             autoComplete='off'
+            value={registrationNumber}
+            onChange={e => setRegistrationNumber(e.target.value.trim())}
           />
           <button
             type='submit'
             className='text-white absolute right-2.5 bottom-2.5 bg-blue-600 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-100 font-medium rounded-lg text-sm px-4 py-2 '
+            onClick={searchStudent}
           >
             Search
           </button>
         </div>
       </form>
-      <SearchedStudent />
+      {searchSuccess && <SearchedStudent student={student} />}
     </div>
   )
 }

@@ -9,6 +9,7 @@ const leaderboardController = require('../controllers/leaderboard')
 
 router.get('/student/:registrationNumber', studentController.getStudentPublic)
 router.get('/events', eventController.getEvents)
+router.get('/events/:eventId', eventController.getEvent)
 router.get('/leaderboard', leaderboardController.getLeaderBoard)
 
 module.exports = router

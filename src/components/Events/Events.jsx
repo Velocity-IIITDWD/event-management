@@ -1,30 +1,30 @@
-import React from 'react'
+import { useState, useEffect, useCallback, useContext } from 'react'
+
+import { authContext } from '../../store/authContext'
 
 import { Link } from 'react-router-dom'
 
 function Events() {
-  const EVENTS = [
-    {
-      title: 'CSS Battle(s)',
-      description: `CSS code-golfing game is here! Use your CSS skills to replicate
-    targets with smallest possible code. Feel free to check out the
-    targets below and put your CSS skills to test.`,
-      imgUrl: 'logo.png',
-      id: Math.random(),
-    },
-    {
-      title: 'Extensive Workshop',
-      description: `Lorem ipsum dolor sit, amet consectetur adipisicing elit. Labore sint praesentium error mollitia similique, dolor excepturi, voluptatem sequi nostrum debitis id saepe sapiente maxime voluptatum quod, beatae ipsum adipisci est.`,
-      imgUrl: 'logo.png',
-      id: Math.random(),
-    },
-  ]
+  const [events, setEvents] = useState([])
+  const { studentId } = useContext(authContext)
 
+  const fetchData = useCallback(async () => {
+    const response = await fetch('/api/public/events')
+    const data = await response.json()
+
+    if (response.status === 200) {
+      setEvents(data.events)
+    }
+  }, [])
+
+  useEffect(() => {
+    fetchData()
+  }, [fetchData])
   return (
     <div className='px-5'>
-      {EVENTS.map(event => (
+      {events.map(event => (
         <div
-          key={event.id}
+          key={event._id}
           className='card lg:card-side bg-base-100 drop-shadow-2xl w-full md:w-4/6 mx-auto my-5'
         >
           <figure className='px-10'>
@@ -39,10 +39,16 @@ function Events() {
             <p>{event.description}</p>
             <div className='card-actions justify-end mt-5'>
               <Link
-                to={'/confirm-registration/:eventId'}
-                className='btn btn-accent btn-outline'
+                to={'/confirm-registration/' + event._id}
+                className={`btn btn-accent ${
+                  event.registrations.indexOf(studentId.toString()) !== -1
+                    ? 'btn-disabled'
+                    : 'btn-outline '
+                }`}
               >
-                Register
+                {event.registrations.indexOf(studentId.toString()) !== -1
+                  ? 'Registered'
+                  : 'Register'}
               </Link>
             </div>
           </div>

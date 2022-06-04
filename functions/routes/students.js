@@ -8,7 +8,6 @@ const studentValidator = require('../validators/students')
 
 router.get('/:registrationNumber', studentController.getStudent)
 
-router.post('/add', studentValidator.addStudent, studentController.addStudent)
 router.put(
   '/:registrationNumber',
   studentValidator.updateStudent,

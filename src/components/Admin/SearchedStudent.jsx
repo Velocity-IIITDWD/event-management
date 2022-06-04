@@ -1,11 +1,94 @@
-import React from 'react'
+import React, { useState } from 'react'
 
-import { Link } from 'react-router-dom'
+import { Link, Navigate } from 'react-router-dom'
 
-function SearchedStudent() {
+function SearchedStudent({ student }) {
+  const [password, setPassword] = useState('')
+  const [name, setName] = useState(student.name)
+  const [mobileNumber, setMobileNumber] = useState(student.mobileNumber)
+
+  const [signupSuccess, setSignupSuccess] = useState(false)
+
+  const updateHandler = async e => {
+    e.preventDefault()
+
+    if (name.length === 0 || mobileNumber.length === 0) {
+      return
+    }
+
+    let updateData = {}
+
+    if (password.length > 5) {
+      updateData = {
+        name,
+        mobileNumber,
+        password,
+      }
+    } else {
+      updateData = {
+        name,
+        mobileNumber,
+      }
+    }
+
+    const options = {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify(updateData),
+    }
+
+    const response = await fetch(
+      `/api/students/${student.registrationNumber}`,
+      options
+    )
+    const data = await response.json()
+
+    if (response.status >= 200 && response.status < 300) {
+      setSignupSuccess(true)
+    } else {
+      console.log(data)
+      alert('something went wrong , check log / network tab')
+    }
+  }
+
+  const deleteHandler = async e => {
+    const confirm = window.confirm(
+      'Are you sure you want to delete this student?'
+    )
+
+    if (!confirm) return
+
+    const options = {
+      method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    }
+    const response = await fetch(
+      `/api/students/${student.registrationNumber}`,
+      options
+    )
+    const data = await response.json()
+
+    if (response.status >= 200 && response.status < 300) {
+      setSignupSuccess(true)
+    } else {
+      console.log(data)
+      alert('something went wrong , check log / network tab')
+    }
+  }
+
   return (
     <div className='px-5'>
-      <form className='border border-base-200 p-10 my-10 w-full md:w-4/6 mx-auto rounded-lg shadow-md'>
+      {signupSuccess && <Navigate to='/admin' />}
+
+      <form
+        className='border border-base-200 p-10 my-10 w-full md:w-4/6 mx-auto rounded-lg shadow-md'
+        onSubmit={updateHandler}
+      >
         <div className='mb-6'>
           <label
             htmlFor='name'
@@ -19,21 +102,10 @@ function SearchedStudent() {
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='name'
             required
-          />
-        </div>
-        <div className='mb-6'>
-          <label
-            htmlFor='reg'
-            className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-          >
-            Registration Number
-          </label>
-          <input
-            type='text'
-            id='reg'
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
-            placeholder='eg. 21bds069'
-            required
+            value={name}
+            onChange={e => {
+              setName(e.target.value)
+            }}
           />
         </div>
 
@@ -50,6 +122,10 @@ function SearchedStudent() {
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='+91 --'
             required
+            value={mobileNumber}
+            onChange={e => {
+              setMobileNumber(e.target.value)
+            }}
           />
         </div>
 
@@ -65,23 +141,10 @@ function SearchedStudent() {
             id='password'
             className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
             placeholder='password'
-            required
-          />
-        </div>
-
-        <div className='mb-6'>
-          <label
-            htmlFor='confirmpassword'
-            className='block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300'
-          >
-            Confirm Password
-          </label>
-          <input
-            type='password'
-            id='confirmpassword'
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-gray-300 focus:border-gray-300 block w-full p-2.5'
-            placeholder='password'
-            required
+            value={password}
+            onChange={e => {
+              setPassword(e.target.value.trim())
+            }}
           />
         </div>
 
@@ -93,12 +156,15 @@ function SearchedStudent() {
         </button>
 
         <Link
-          to='/admin/students/managecreds/:registrationNumber'
+          to={'/admin/students/managecreds/' + student.registrationNumber}
           className='text-white bg-blue-800 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center ml-5'
         >
           Manage Creds
         </Link>
-        <button className='text-white bg-red-500  ml-5 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
+        <button
+          className='text-white bg-red-500  ml-5 hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
+          onClick={deleteHandler}
+        >
           Delete
         </button>
       </form>

@@ -1,6 +1,39 @@
 import RankElement from './RankElement'
 
+import { useState, useEffect } from 'react'
+
 function Leaderboard() {
+  const [students, setStudents] = useState([])
+  const [page, setPage] = useState(1)
+  const [totalPages, setTotalPages] = useState(1)
+
+  const fetchData = async page => {
+    const response = await fetch('/api/public/leaderboard/?page=' + page)
+    const data = await response.json()
+
+    if (response.status === 200) {
+      // console.log(data)
+      setStudents(data.students)
+      setTotalPages(data.pages)
+    }
+  }
+
+  useEffect(() => {
+    fetchData(page)
+  }, [page])
+
+  const prevPage = () => {
+    if (page > 1) {
+      setPage(page - 1)
+    }
+  }
+
+  const nextPage = () => {
+    if (page < totalPages) {
+      setPage(page + 1)
+    }
+  }
+
   return (
     <>
       <div>
@@ -16,23 +49,42 @@ function Leaderboard() {
               </tr>
             </thead>
             <tbody>
-              <RankElement
-                rank={1}
-                name='Pratik Pakhale'
-                description='Won Hackathon'
-                points='200'
-                id=''
-                lastPoints='50'
-                registrationNumber='21BCS085'
-              />
+              {students.map((student, index) => {
+                return (
+                  <RankElement
+                    rank={index + 1}
+                    name={student.name}
+                    description={
+                      student.creds[student.creds.length - 1].description.slice(
+                        0,
+                        22
+                      ) + '..'
+                    }
+                    points={student.totalCreds}
+                    key={student.registrationNumber}
+                    lastPoints={student.creds[student.creds.length - 1].points}
+                    registrationNumber={student.registrationNumber}
+                  />
+                )
+              })}
             </tbody>
           </table>
         </div>
       </div>
 
-      <div className='btn-group grid grid-cols-2 w-4/6 md:w-1/2 mx-auto mt-10'>
-        <button className='btn btn-outline'>Previous page</button>
-        <button className='btn btn-outline'>Next</button>
+      <div className='btn-group grid grid-cols-2 w-4/6 md:w-1/2 mx-auto my-10'>
+        <button
+          className={`btn btn-outline ${page < 2 && 'btn-disabled'}`}
+          onClick={prevPage}
+        >
+          Previous page
+        </button>
+        <button
+          className={`btn btn-outline ${page >= totalPages && 'btn-disabled'}`}
+          onClick={nextPage}
+        >
+          Next
+        </button>
       </div>
     </>
   )

@@ -2,6 +2,21 @@
 
 const Creds = require('../models/creds')
 
+exports.getCreds = async (req, res, next) => {
+  try {
+    const creds = await Creds.find()
+    res.status(200).json({
+      message: 'Creds fetched!',
+      creds,
+    })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
 exports.addCreds = async (req, res, next) => {
   const points = req.body.points
   const timestamp = Date.now()

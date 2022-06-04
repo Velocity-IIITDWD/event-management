@@ -1,8 +1,10 @@
 import React, { useState } from 'react'
 
-import { Navigate } from 'react-router-dom'
+import { useLocation, Navigate } from 'react-router-dom'
 
-function AddCreds() {
+function AddStudentCreds() {
+  const registrationNumber = useLocation().pathname.split('/')[4]
+
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [points, setPoints] = useState('')
@@ -16,7 +18,7 @@ function AddCreds() {
       return
     }
 
-    const response = await fetch(`/api/creds/add`, {
+    const response = await fetch(`/api/students/creds/${registrationNumber}`, {
       method: 'POST',
       headers: {
         Authorization: `Bearer ${localStorage.getItem('token')}`,
@@ -31,7 +33,7 @@ function AddCreds() {
 
     const data = await response.json()
 
-    if (response.status === 201) {
+    if (response.status === 200) {
       setSuccess(true)
     } else {
       setSuccess(false)
@@ -42,7 +44,9 @@ function AddCreds() {
 
   return (
     <div className='px-5'>
-      {success && <Navigate to={'/admin/creds/'} />}
+      {success && (
+        <Navigate to={'/admin/students/managecreds/' + registrationNumber} />
+      )}
       <form
         className='border border-base-200 p-10 my-10 w-full md:w-4/6 mx-auto rounded-lg shadow-md'
         onSubmit={handleSubmit}
@@ -112,4 +116,4 @@ function AddCreds() {
   )
 }
 
-export default AddCreds
+export default AddStudentCreds

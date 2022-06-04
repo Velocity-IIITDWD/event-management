@@ -33,7 +33,7 @@ exports.claim = async (req, res, next) => {
       points: creds.points,
       title: creds.title,
       description: creds.description,
-      timestamp: creds.timestamp,
+      timestamp: Date.now(),
     })
 
     student.totalCreds += creds.points

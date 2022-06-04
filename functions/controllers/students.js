@@ -2,7 +2,6 @@ const { validationResult } = require('express-validator')
 const brcypt = require('bcryptjs')
 
 const Student = require('../models/student')
-
 exports.getStudent = async (req, res, next) => {
   const registrationNumber = req.params.registrationNumber.toUpperCase() // get registration number from url and convert to uppercase
 
@@ -45,51 +44,6 @@ exports.getStudentPublic = async (req, res, next) => {
     next(err)
   }
 }
-
-exports.addStudent = async (req, res, next) => {
-  const errors = validationResult(req)
-
-  if (!errors.isEmpty()) {
-    const error = new Error('Validation failed, entered data is incorrect.')
-    error.statusCode = 422
-    error.data = errors.array()
-    return next(error)
-  }
-
-  const name = req.body.name
-  const registrationNumber = req.body.registrationNumber.toUpperCase()
-  const mobileNumber = req.body.mobileNumber
-  const password = req.body.password
-
-  try {
-    const studentExists = await Student.findOne({ registrationNumber })
-
-    if (studentExists) {
-      const error = new Error(
-        `Student already exists with ${registrationNumber} registration number.`
-      )
-      error.statusCode = 409
-      throw error
-    }
-
-    const hashedPassword = await brcypt.hash(password, 12)
-    const student = new Student({
-      name,
-      registrationNumber,
-      password: hashedPassword,
-      mobileNumber,
-    })
-
-    const result = await student.save()
-    res.status(201).json({ message: 'Student created!', studentId: result._id })
-  } catch (err) {
-    if (!err.statusCode) {
-      err.statusCode = 500
-    }
-    next(err)
-  }
-}
-
 exports.updateStudent = async (req, res, next) => {
   const errors = validationResult(req)
 
@@ -221,6 +175,8 @@ exports.deleteCreds = async (req, res, next) => {
       }
       return cred.key !== key
     })
+    console.log('typeof points: ', typeof points, points)
+    console.log('typeof student total points: ', typeof student.totalCreds)
     student.creds = creds
     student.totalCreds -= points
     await student.save()

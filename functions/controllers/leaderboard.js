@@ -1,8 +1,10 @@
 const Student = require('../models/student')
 
+require('dotenv').config()
+
 exports.getLeaderBoard = async (req, res, next) => {
   const page = req.query.page || 1
-  const perPage = 15
+  const perPage = process.env.PER_PAGE_STUDENTS
 
   try {
     const totalStudents = await Student.find({
