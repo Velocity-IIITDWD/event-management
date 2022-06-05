@@ -75,7 +75,7 @@ function Timeline() {
           </div>
 
           <ol className='relative border-l border-gray-200 dark:border-gray-700'>
-            {studentCreds.reverse().map(creds => {
+            {studentCreds.map(creds => {
               return (
                 <TimelineComponent
                   key={creds.timestamp}

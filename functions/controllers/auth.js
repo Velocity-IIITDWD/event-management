@@ -39,7 +39,9 @@ exports.signup = async (req, res, next) => {
 
     await student.save()
 
-    const registeredStudents = await Student.find().countDocuments()
+    const registeredStudents = await Student.find({
+      type: 'student',
+    }).countDocuments()
     const signedupStudent = await Student.findOne({ registrationNumber })
 
     const points = Math.ceil(

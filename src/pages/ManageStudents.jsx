@@ -1,31 +1,47 @@
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 
 import SearchedStudent from '../components/Admin/SearchedStudent'
+
+import { useLocation } from 'react-router-dom'
 
 function ManageStudents() {
   const [registrationNumber, setRegistrationNumber] = useState('')
   const [searchSuccess, setSearchSuccess] = useState(false)
   const [student, setStudent] = useState({})
+  const paramRegistrationNumber = useLocation().pathname.split('/')[3]
 
-  const searchStudent = async e => {
-    e.preventDefault()
-
-    const response = await fetch(
-      `/.netlify/functions/app/students/${registrationNumber}`,
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
+  const searchStudent = useCallback(
+    async e => {
+      if (e) {
+        e.preventDefault()
       }
-    )
 
-    const data = await response.json()
+      if (registrationNumber.length !== 8) return
 
-    if (response.status === 200) {
-      setSearchSuccess(true)
-      setStudent(data.student)
+      const response = await fetch(
+        `/.netlify/functions/app/students/${registrationNumber}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('token')}`,
+          },
+        }
+      )
+
+      const data = await response.json()
+      if (response.status === 200) {
+        setSearchSuccess(true)
+        setStudent(data.student)
+      }
+    },
+    [registrationNumber]
+  )
+
+  useEffect(() => {
+    if (paramRegistrationNumber) {
+      setRegistrationNumber(paramRegistrationNumber)
+      searchStudent()
     }
-  }
+  }, [paramRegistrationNumber, searchStudent])
 
   return (
     <div className='px-10 my-10'>

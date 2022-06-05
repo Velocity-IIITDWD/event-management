@@ -5,7 +5,7 @@ const registrationNumber = require('./util/registrationNumber.js')
 exports.login = [
   registrationNumber,
   body('password')
-    .isLength({ min: 6 })
+    .isLength({ min: 4 })
     .withMessage('Password must be at least 6 characters long')
     .isLength({ max: 30 })
     .withMessage('Password must be at most 30 characters long')
@@ -27,7 +27,7 @@ exports.signup = [
 
   // password validation
   body('password')
-    .isLength({ min: 6 })
+    .isLength({ min: 4 })
     .withMessage('Password must be at least 6 characters long')
     .isLength({ max: 30 })
     .withMessage('Password must be at most 30 characters long')

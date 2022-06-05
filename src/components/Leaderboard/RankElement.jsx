@@ -1,5 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
+import { authContext } from '../../store/authContext'
 import { Link } from 'react-router-dom'
 
 function RankElement({
@@ -11,6 +12,8 @@ function RankElement({
   lastPoints = 'Hidden',
   registrationNumber = '',
 }) {
+  const { type } = useContext(authContext)
+
   return (
     <tr>
       <th>{rank}</th>
@@ -40,12 +43,21 @@ function RankElement({
       </td>
       <td>{points}</td>
       <th>
-        <Link
-          to={'/timeline/' + registrationNumber}
-          className='btn btn-ghost btn-xs'
-        >
-          Timeline
-        </Link>
+        {type === 'admin' ? (
+          <Link
+            to={'/admin/students/' + registrationNumber}
+            className='btn btn-ghost btn-xs'
+          >
+            Manage
+          </Link>
+        ) : (
+          <Link
+            to={'/timeline/' + registrationNumber}
+            className='btn btn-ghost btn-xs'
+          >
+            Timeline
+          </Link>
+        )}
       </th>
     </tr>
   )

@@ -79,6 +79,10 @@ function App() {
         <Route path='/admin/events/new' element={<NewEvent />} />
         <Route path='/admin/events/edit/:eventId' element={<EditEvent />} />
         <Route path='/admin/students' element={<ManageStudents />} />
+        <Route
+          path='/admin/students/:registrationNumber'
+          element={<ManageStudents />}
+        />
         <Route path='/admin/creds' element={<ManageCreds />} />
         <Route path='/admin/creds/qrcode/:credsId' element={<CredQrCode />} />
         <Route

@@ -18,7 +18,7 @@ exports.addStudent = [
 
   // password validation
   body('password')
-    .isLength({ min: 6 })
+    .isLength({ min: 4 })
     .withMessage('Password must be at least 6 characters long')
     .isLength({ max: 30 })
     .withMessage('Password must be at most 30 characters long')
@@ -41,7 +41,7 @@ exports.updateStudent = [
   // password validation
   body('password')
     .optional()
-    .isLength({ min: 6 })
+    .isLength({ min: 4 })
     .withMessage('Password must be at least 6 characters long')
     .isLength({ max: 30 })
     .withMessage('Password must be at most 30 characters long')
@@ -65,10 +65,10 @@ exports.addCreds = [
   // description validation
   body('description')
     .notEmpty()
-    .isLength({ min: 10 })
+    .isLength({ min: 4 })
     .isLength({ max: 1000 })
     .isAscii()
     .trim(),
 
-  body('points').notEmpty().isNumeric(),
+  body('points').notEmpty(),
 ]

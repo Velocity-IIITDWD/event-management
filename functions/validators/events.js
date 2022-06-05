@@ -16,13 +16,13 @@ exports.createEvent = [
   // description validation
   body('description')
     .notEmpty()
-    .isLength({ min: 10 })
+    .isLength({ min: 4 })
     .isLength({ max: 1000 })
     .isAscii()
     .trim(),
 
   body('registrationPoints').notEmpty().isNumeric(),
-  body('imgUrl').notEmpty().isURL(),
+  body('imgUrl').notEmpty(),
 
   body('isRegistrationOpen').isBoolean(),
 ]
