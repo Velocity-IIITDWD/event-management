@@ -46,12 +46,12 @@ function Events() {
               <Link
                 to={'/confirm-registration/' + event._id}
                 className={`btn btn-accent ${
-                  event.registrations.indexOf(studentId.toString()) !== -1
+                  event.registrations.indexOf(studentId) !== -1
                     ? 'btn-disabled'
                     : 'btn-outline '
                 }`}
               >
-                {event.registrations.indexOf(studentId.toString()) !== -1
+                {event.registrations.indexOf(studentId) !== -1
                   ? 'Registered'
                   : 'Register'}
               </Link>

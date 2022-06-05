@@ -5,7 +5,7 @@ const authContext = createContext({
   token: null,
   type: 'student',
   registrationNumber: null,
-  studentId: null,
+  studentId: '',
   newToken: () => {},
   login: () => {},
   logout: () => {},
