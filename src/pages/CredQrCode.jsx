@@ -8,7 +8,7 @@ function CredQrCode() {
   const domain = window.location.origin
 
   return (
-    <div className='w-full flex justify-center items-center mt-20'>
+    <div className='w-full flex justify-center items-center mt-5 md:mt-10 lg:mt-20'>
       <QRCodeSVG
         value={`${domain}/qrcode/${useLocation().pathname.split('/')[4]}`}
         size={500}

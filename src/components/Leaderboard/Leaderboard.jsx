@@ -59,7 +59,7 @@ function Leaderboard() {
                 {students.map((student, index) => {
                   return (
                     <RankElement
-                      rank={index + 1}
+                      rank={(page - 1) * 10 + index + 1}
                       name={student.name}
                       description={
                         student.creds[
