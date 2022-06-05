@@ -38,12 +38,11 @@ function Navbar() {
         </Link>
       </div>
       <div className='flex-1'>
-        <Link
-          to={'/'}
-          className='btn btn-ghost normal-case text-xl  hidden md:inline-flex'
-        >
-          Velocity Events
-        </Link>
+        {type !== 'admin' && (
+          <Link to={'/'} className='btn btn-ghost normal-case text-xl'>
+            Velocity Events
+          </Link>
+        )}
       </div>
       {isAuthenticated && type === 'admin' && (
         <Link to={'/admin'} className='btn btn-ghost normal-case text-xl'>
