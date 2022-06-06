@@ -33,16 +33,22 @@ function Navbar() {
       <div className='flex-none'>
         <Link to={'/'} className='btn btn-ghost btn-circle avatar'>
           <div className='w-10 rounded-full'>
-            <img src='logo.svg' alt='Velocity Logo' />
+            <img
+              src={process.env.PUBLIC_URL + '/logo.svg'}
+              alt='Velocity Logo'
+            />
           </div>
         </Link>
       </div>
       <div className='flex-1'>
-        {type !== 'admin' && (
-          <Link to={'/'} className='btn btn-ghost normal-case text-xl'>
-            Velocity Events
-          </Link>
-        )}
+        <Link
+          to={'/'}
+          className={`btn btn-ghost normal-case text-xl ${
+            type === 'admin' ? 'hidden md:inline-flex' : 'inline-flex'
+          }`}
+        >
+          Velocity Events
+        </Link>
       </div>
       {isAuthenticated && type === 'admin' && (
         <Link to={'/admin'} className='btn btn-ghost normal-case text-xl'>

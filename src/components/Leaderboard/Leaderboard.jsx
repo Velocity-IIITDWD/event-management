@@ -52,7 +52,7 @@ function Leaderboard() {
                   <th>Name</th>
                   <th>Latest Points</th>
                   <th>Total Points</th>
-                  <th></th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>

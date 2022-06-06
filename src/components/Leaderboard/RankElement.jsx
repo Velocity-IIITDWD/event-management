@@ -16,7 +16,7 @@ function RankElement({
 
   return (
     <tr>
-      <th>{rank}</th>
+      <th className='bg-slate-200'>{rank}</th>
       <td>
         <div className='flex items-center space-x-3'>
           <div>
