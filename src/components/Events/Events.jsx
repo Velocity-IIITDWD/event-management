@@ -15,7 +15,7 @@ function Events() {
 
     const response = await fetch('/.netlify/functions/app/public/events')
     const data = await response.json()
-    console.log(data)
+    // console.log(data)
     if (response.status === 200) {
       setEvents(data.events)
       setLoading(false)
