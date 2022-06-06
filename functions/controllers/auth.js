@@ -37,21 +37,22 @@ exports.signup = async (req, res, next) => {
       mobileNumber,
     })
 
-    await student.save()
+    // await student.save()
 
-    const registeredStudents = await Student.find({
-      type: 'student',
-    }).countDocuments()
-    const signedupStudent = await Student.findOne({ registrationNumber })
+    // const registeredStudents = await Student.find({
+    //   type: 'student',
+    // }).countDocuments()
+    // const signedupStudent = await Student.findOne({ registrationNumber })
 
-    const points = Math.ceil(
-      (50 * (process.env.TOTAL_STUDENTS - registeredStudents)) /
-        process.env.TOTAL_STUDENTS
-    )
+    // const points = Math.ceil(
+    //   (50 * (process.env.TOTAL_STUDENTS - registeredStudents)) /
+    //     process.env.TOTAL_STUDENTS
+    // )
 
     const timestamp = Date.now()
+    const points = 30
 
-    signedupStudent.creds.push({
+    student.creds.push({
       points,
       title: 'Signup Bonus',
       description: `Received ${points} Points for signing up.`,
@@ -59,11 +60,11 @@ exports.signup = async (req, res, next) => {
       key: timestamp.toString(),
     })
 
-    signedupStudent.totalCreds += points
+    student.totalCreds += points
 
-    await signedupStudent.save()
+    await student.save()
 
-    res.status(201).json({ message: 'Student created!', signedupStudent })
+    res.status(201).json({ message: 'Student created!', student })
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500
