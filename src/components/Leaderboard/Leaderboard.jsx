@@ -48,7 +48,7 @@ function Leaderboard() {
             <table className='table w-full'>
               <thead>
                 <tr>
-                  <th>Rank</th>
+                  <td>Rank</td>
                   <th>Name</th>
                   <th>Latest Points</th>
                   <th>Total Points</th>

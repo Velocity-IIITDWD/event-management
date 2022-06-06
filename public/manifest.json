@@ -16,6 +16,11 @@
       "src": "logo.png",
       "type": "image/png",
       "sizes": "512x512"
+    },
+    {
+      "src": "velocity-logo.jpeg",
+      "type": "image/jpeg",
+      "sizes": "512x512"
     }
   ],
   "start_url": ".",
