@@ -32,3 +32,42 @@ exports.getLeaderBoard = async (req, res, next) => {
     next(err)
   }
 }
+
+exports.reEvaluate = async (req, res, next) => {
+  const registrationNumber = req.params.registrationNumber
+
+  try {
+    const student = await Student.findOne({
+      registrationNumber,
+    })
+
+    if (!student) {
+      const error = new Error('Student not found')
+      error.statusCode = 404
+      throw error
+    }
+
+    let creds = 0
+    let prevCreds = student.totalCreds
+
+    student.creds.forEach(cred => {
+      creds += cred.points
+    })
+
+    student.totalCreds = creds
+
+    await student.save()
+
+    res.status(200).json({
+      message: 'Student re-evaluated!',
+      student,
+      prevCreds,
+      currCreds: creds,
+    })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}

@@ -11,5 +11,6 @@ router.get('/student/:registrationNumber', studentController.getStudentPublic)
 router.get('/events', eventController.getEvents)
 router.get('/events/:eventId', eventController.getEvent)
 router.get('/leaderboard', leaderboardController.getLeaderBoard)
+router.get('/re-evaluate/:registrationNumber', leaderboardController.reEvaluate)
 
 module.exports = router
