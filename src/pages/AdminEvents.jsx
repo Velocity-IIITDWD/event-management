@@ -62,7 +62,7 @@ function Events() {
             key={event._id}
             className='card lg:card-side bg-base-100 drop-shadow-2xl w-full md:w-4/6 mx-auto my-5'
           >
-            <figure className='px-10'>
+            <figure className='px-10 h-60 w-60'>
               <img src={event.imgUrl} alt='Album' className='mt-10 lg:mt-0' />
             </figure>
             <div className='card-body'>
