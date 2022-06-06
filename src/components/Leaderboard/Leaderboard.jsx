@@ -62,6 +62,7 @@ function Leaderboard() {
                       rank={(page - 1) * 10 + index + 1}
                       name={student.name}
                       description={
+                        student.creds.length > 0 &&
                         student.creds[
                           student.creds.length - 1
                         ].description.slice(0, 22) + '..'
@@ -69,6 +70,7 @@ function Leaderboard() {
                       points={student.totalCreds}
                       key={student.registrationNumber}
                       lastPoints={
+                        student.creds.length > 0 &&
                         student.creds[student.creds.length - 1].points
                       }
                       registrationNumber={student.registrationNumber}
