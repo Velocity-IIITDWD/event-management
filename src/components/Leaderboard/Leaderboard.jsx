@@ -6,8 +6,11 @@ function Leaderboard() {
   const [students, setStudents] = useState([])
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(1)
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchData = async page => {
+    setIsLoading(true)
+
     const response = await fetch(
       '/.netlify/functions/app/public/leaderboard/?page=' + page
     )
@@ -17,6 +20,7 @@ function Leaderboard() {
       // console.log(data)
       setStudents(data.students)
       setTotalPages(data.pages)
+      setIsLoading(false)
     }
   }
 
@@ -35,6 +39,15 @@ function Leaderboard() {
       setPage(page + 1)
     }
   }
+
+  if (isLoading)
+    return (
+      <div>
+        <div className='my-20 flex justify-center items-center'>
+          <h1>Loading..</h1>
+        </div>
+      </div>
+    )
 
   return (
     <>

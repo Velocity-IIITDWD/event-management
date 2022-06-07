@@ -8,23 +8,32 @@ function Events() {
   const [events, setEvents] = useState([])
   const { studentId } = useContext(authContext)
 
-  const [loading, setLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   const fetchData = useCallback(async () => {
-    if (!loading) return
+    setIsLoading(true)
 
     const response = await fetch('/.netlify/functions/app/public/events')
     const data = await response.json()
     // console.log(data)
     if (response.status === 200) {
       setEvents(data.events)
-      setLoading(false)
+      setIsLoading(false)
     }
-  }, [loading])
+  }, [setEvents])
 
   useEffect(() => {
     fetchData()
   }, [fetchData])
+
+  if (isLoading)
+    return (
+      <div className='px-5'>
+        <div className='my-20 flex justify-center items-center'>
+          <h1>No events yet. </h1>
+        </div>{' '}
+      </div>
+    )
 
   return (
     <div className='px-5'>
