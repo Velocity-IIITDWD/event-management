@@ -72,7 +72,11 @@ function Leaderboard() {
                 {students.map((student, index) => {
                   return (
                     <RankElement
-                      rank={(page - 1) * 10 + index + 1}
+                      rank={
+                        (page - 1) * process.env.REACT_APP_PER_PAGE_STUDENTS +
+                        index +
+                        1
+                      }
                       name={student.name}
                       description={
                         student.creds.length > 0 &&

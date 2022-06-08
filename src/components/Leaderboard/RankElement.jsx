@@ -16,9 +16,15 @@ function RankElement({
 
   return (
     <tr>
-      <td className='bg-slate-200'>{rank}</td>
+      <td className='bg-slate-200 '>{rank}</td>
       <td>
-        <div className='flex items-center space-x-3'>
+        <div
+          className={`flex items-center space-x-3 ${
+            rank === 1 && 'bg-yellow-300 rounded'
+          } ${rank === 2 && 'bg-gray-300 rounded'} ${
+            rank === 3 && 'bg-yellow-700 rounded text-white'
+          }`}
+        >
           <div>
             <Link
               to={'/timeline/' + registrationNumber}

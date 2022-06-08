@@ -4,7 +4,7 @@ require('dotenv').config()
 
 exports.getLeaderBoard = async (req, res, next) => {
   const page = req.query.page || 1
-  const perPage = process.env.PER_PAGE_STUDENTS
+  const perPage = process.env.REACT_APP_PER_PAGE_STUDENTS
 
   try {
     const totalStudents = await Student.find({
