@@ -91,13 +91,18 @@ exports.deleteStudent = async (req, res, next) => {
   const registrationNumber = req.params.registrationNumber.toUpperCase()
 
   try {
-    const student = await Student.findOneAndDelete({ registrationNumber })
+    const student = await Student.findOne({ registrationNumber })
 
     if (!student) {
       const error = new Error('Could not find student.')
       error.statusCode = 404
       throw error
     }
+
+    student.type = 'deleted_student'
+    student.registrationNumber = 'deleted_' + registrationNumber
+
+    await student.save()
 
     res.status(200).json({ message: 'Student deleted!' })
   } catch (err) {
