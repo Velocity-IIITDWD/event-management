@@ -20,9 +20,7 @@ function RankElement({
       <td>
         <div
           className={`flex items-center space-x-3 ${
-            rank === 1 && 'bg-yellow-300 rounded'
-          } ${rank === 2 && 'bg-gray-300 rounded'} ${
-            rank === 3 && 'bg-yellow-700 rounded text-white'
+            rank < 6 && 'bg-yellow-300 rounded'
           }`}
         >
           <div>
