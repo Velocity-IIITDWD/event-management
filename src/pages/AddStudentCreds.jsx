@@ -45,6 +45,23 @@ function AddStudentCreds() {
     }
   }
 
+  const [challengeName, setChallengeName] = useState('')
+  const [challengePoints, setChallengePoints] = useState('')
+
+  const customPoints = e => {
+    e.preventDefault()
+
+    setPoints(challengePoints)
+    setTitle('Completed ' + challengeName + ' Challenge')
+    setDescription(
+      'Received ' +
+        challengePoints +
+        ' points for completing ' +
+        challengeName +
+        ' challenge'
+    )
+  }
+
   return (
     <div className='px-5'>
       {success && (
@@ -113,6 +130,31 @@ function AddStudentCreds() {
           className='text-white bg-blue-800 hover:bg-blue-800 focus:ring-gray-300 focus:border-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center'
         >
           Add
+        </button>
+        <hr className='mt-5' />
+        <input
+          type='text'
+          id='Challenge Name'
+          class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-5'
+          placeholder='Challenge Name'
+          required
+          value={challengeName}
+          onChange={e => setChallengeName(e.target.value)}
+        />
+        <input
+          type='number'
+          id='Challenge Points'
+          class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-5'
+          placeholder='Challenge Points'
+          required
+          value={challengePoints}
+          onChange={e => setChallengePoints(e.target.value)}
+        />
+        <button
+          className='text-white bg-blue-800 hover:bg-blue-800 focus:ring-gray-300 focus:border-gray-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center mt-5'
+          onClick={customPoints}
+        >
+          Add Challenge Points
         </button>
       </form>
     </div>
