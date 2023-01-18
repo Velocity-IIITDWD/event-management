@@ -2,6 +2,8 @@ const Student = require('../models/student')
 const Event = require('../models/event')
 
 exports.registerEvent = async (req, res, next) => {
+  const LIMIT_REGISTRATIONS = 120
+
   const eventId = req.params.eventId
   const studentId = req.studentId
 
@@ -16,6 +18,12 @@ exports.registerEvent = async (req, res, next) => {
     if (!event) {
       const error = new Error('Could not find event.')
       error.statusCode = 404
+      return next(error)
+    }
+
+    if (event.registrations.length >= LIMIT_REGISTRATIONS) {
+      const error = new Error('Registrations for this event are full.')
+      error.statusCode = 402
       return next(error)
     }
 
@@ -94,6 +102,48 @@ exports.isRegistered = async (req, res, next) => {
 
     await event.save()
     res.status(201).json({ message: 'Status Fetched', isRegistered })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
+exports.isRegistrationFull = async (req, res, next) => {
+  const eventId = req.params.eventId
+
+  try {
+    const event = await Event.findById(eventId)
+    if (!event) {
+      const error = new Error('Could not find event.')
+      error.statusCode = 404
+      return next(error)
+    }
+    const isRegistrationFull = event.registrations.length >= 120
+    await event.save()
+    res.status(201).json({ message: 'Status Fetched', isRegistrationFull })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
+exports.getRemainingRegistrations = async (req, res, next) => {
+  const eventId = req.params.eventId
+
+  try {
+    const event = await Event.findById(eventId)
+    if (!event) {
+      const error = new Error('Could not find event.')
+      error.statusCode = 404
+      return next(error)
+    }
+    const remainingRegistrations = 120 - event.registrations.length
+    await event.save()
+    res.status(201).json({ message: 'Status Fetched', remainingRegistrations })
   } catch (err) {
     if (!err.statusCode) {
       err.statusCode = 500

@@ -10,6 +10,8 @@ function Events() {
 
   const [isLoading, setIsLoading] = useState(true)
 
+  const MAX_REG = 120
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true)
@@ -57,18 +59,26 @@ function Events() {
           <div className='card-body'>
             <h2 className='card-title'>{event.title}</h2>
             <p>{event.description}</p>
+            <i>Seats Left: {MAX_REG - event.registrations.length}</i>
             <div className='card-actions justify-end mt-5'>
               <Link
                 to={'/confirm-registration/' + event._id}
                 className={`btn btn-accent ${
-                  event.registrations.indexOf(studentId) !== -1
+                  event.registrations.indexOf(studentId) !== -1 ||
+                  MAX_REG - event.registrations.length === 0
                     ? 'btn-disabled'
                     : 'btn-outline '
                 }`}
               >
-                {event.registrations.indexOf(studentId) !== -1
-                  ? 'Registered'
-                  : 'Register'}
+                {MAX_REG - event.registrations.length === 0 ? (
+                  'Full'
+                ) : (
+                  <>
+                    {event.registrations.indexOf(studentId) !== -1
+                      ? 'Registered'
+                      : 'Register'}
+                  </>
+                )}
               </Link>
             </div>
           </div>
