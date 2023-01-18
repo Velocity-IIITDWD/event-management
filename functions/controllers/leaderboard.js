@@ -11,18 +11,35 @@ exports.getLeaderBoard = async (req, res, next) => {
       type: 'student',
     }).countDocuments() // count documents
 
-    const students = await Student.find({
+    let students = await Student.find({
       type: 'student',
     })
       .sort({ totalCreds: -1, createdAt: -1 })
-
       .skip((page - 1) * perPage)
       .limit(perPage)
       .select('-mobileNumber')
 
+    let updatedStudents = []
+
+    students.forEach(student => {
+      let totalCreds = 0
+      const limiting_timestamp = 1674063443716 // 18 jan 2023
+
+      student.creds.forEach(cred => {
+        if (cred.timestamp > limiting_timestamp) totalCreds += cred.points
+      })
+
+      updatedStudents.push({
+        ...student._doc,
+        totalCreds,
+      })
+    })
+
+    students.sort((a, b) => b.totalCreds - a.totalCreds)
+
     res.status(200).json({
       message: 'Students fetched!',
-      students,
+      students: updatedStudents,
       pages: Math.ceil(totalStudents / perPage),
       currentPage: page,
     })
