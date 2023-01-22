@@ -64,6 +64,13 @@ function App() {
 
   return (
     <>
+      migration scripts are running.. please wait. website should be back up in
+      about 10 minutes
+    </>
+  )
+
+  return (
+    <>
       <Navbar />
       {!isAuthenticated && <LoginSignup />}
       <Routes>
