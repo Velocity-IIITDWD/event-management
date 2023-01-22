@@ -19,27 +19,9 @@ exports.getLeaderBoard = async (req, res, next) => {
       .limit(perPage)
       .select('-mobileNumber')
 
-    let updatedStudents = []
-
-    students.forEach(student => {
-      let totalCreds = 0
-      const limiting_timestamp = 1674063443716 // 18 jan 2023
-
-      student.creds.forEach(cred => {
-        if (cred.timestamp > limiting_timestamp) totalCreds += cred.points
-      })
-
-      updatedStudents.push({
-        ...student._doc,
-        totalCreds,
-      })
-    })
-
-    students.sort((a, b) => b.totalCreds - a.totalCreds)
-
     res.status(200).json({
       message: 'Students fetched!',
-      students: updatedStudents,
+      students,
       pages: Math.ceil(totalStudents / perPage),
       currentPage: page,
     })
