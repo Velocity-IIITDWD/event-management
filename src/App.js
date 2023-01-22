@@ -64,68 +64,61 @@ function App() {
 
   return (
     <>
-      migration scripts are running.. please wait. website should be back up in
-      about 10 minutes
+      <Navbar />
+      {!isAuthenticated && <LoginSignup />}
+      <Routes>
+        <Route path='/' element={<Home />} />
+        <Route path='/login' element={<Login />} />
+        <Route path='/signup' element={<Signup />} />
+        <Route path='/timeline/:registrationNumber' element={<Timeline />} />
+        <Route
+          path='/confirm-registration/:eventId'
+          element={<ConfirmRegistration />}
+        />
+
+        <Route path='/qrcode/:id' element={<CredRewards />} />
+        <Route path='/login-to-continue' element={<LoginToContinue />} />
+
+        {isAuthenticated && type === 'admin' && (
+          <>
+            <Route path='/admin' element={<Admin />} />'
+            <Route path='/admin/events' element={<AdminEvents />} />
+            <Route path='/admin/events/new' element={<NewEvent />} />
+            <Route path='/admin/events/edit/:eventId' element={<EditEvent />} />
+            <Route path='/admin/students' element={<ManageStudents />} />
+            <Route
+              path='/admin/students/:registrationNumber'
+              element={<ManageStudents />}
+            />
+            <Route path='/admin/creds' element={<ManageCreds />} />
+            <Route
+              path='/admin/creds/qrcode/:credsId'
+              element={<CredQrCode />}
+            />
+            <Route
+              path='/admin/students/managecreds/:registrationNumber'
+              element={<ManageStudentCreds />}
+            />
+            <Route
+              path='/admin/students/managecreds/:registrationNumber/new'
+              element={<AddStudentCreds />}
+            />
+            <Route path='/admin/creds/new' element={<AddCreds />} />
+            <Route
+              path='/admin/students/managecreds/:registrationNumber/edit/:timestamp'
+              element={<EditStudentCredits />}
+            />
+            <Route
+              path='/admin/registrations/:eventId'
+              element={<EventRegistrations />}
+            />
+          </>
+        )}
+
+        <Route path='/*' element={<Navigate to={'/'} />} />
+      </Routes>
     </>
   )
-
-  // return (
-  //   <>
-  //     <Navbar />
-  //     {!isAuthenticated && <LoginSignup />}
-  //     <Routes>
-  //       <Route path='/' element={<Home />} />
-  //       <Route path='/login' element={<Login />} />
-  //       <Route path='/signup' element={<Signup />} />
-  //       <Route path='/timeline/:registrationNumber' element={<Timeline />} />
-  //       <Route
-  //         path='/confirm-registration/:eventId'
-  //         element={<ConfirmRegistration />}
-  //       />
-
-  //       <Route path='/qrcode/:id' element={<CredRewards />} />
-  //       <Route path='/login-to-continue' element={<LoginToContinue />} />
-
-  //       {isAuthenticated && type === 'admin' && (
-  //         <>
-  //           <Route path='/admin' element={<Admin />} />'
-  //           <Route path='/admin/events' element={<AdminEvents />} />
-  //           <Route path='/admin/events/new' element={<NewEvent />} />
-  //           <Route path='/admin/events/edit/:eventId' element={<EditEvent />} />
-  //           <Route path='/admin/students' element={<ManageStudents />} />
-  //           <Route
-  //             path='/admin/students/:registrationNumber'
-  //             element={<ManageStudents />}
-  //           />
-  //           <Route path='/admin/creds' element={<ManageCreds />} />
-  //           <Route
-  //             path='/admin/creds/qrcode/:credsId'
-  //             element={<CredQrCode />}
-  //           />
-  //           <Route
-  //             path='/admin/students/managecreds/:registrationNumber'
-  //             element={<ManageStudentCreds />}
-  //           />
-  //           <Route
-  //             path='/admin/students/managecreds/:registrationNumber/new'
-  //             element={<AddStudentCreds />}
-  //           />
-  //           <Route path='/admin/creds/new' element={<AddCreds />} />
-  //           <Route
-  //             path='/admin/students/managecreds/:registrationNumber/edit/:timestamp'
-  //             element={<EditStudentCredits />}
-  //           />
-  //           <Route
-  //             path='/admin/registrations/:eventId'
-  //             element={<EventRegistrations />}
-  //           />
-  //         </>
-  //       )}
-
-  //       <Route path='/*' element={<Navigate to={'/'} />} />
-  //     </Routes>
-  //   </>
-  // )
 }
 
 export default App
