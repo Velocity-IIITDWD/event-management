@@ -50,7 +50,7 @@ exports.signup = async (req, res, next) => {
     // )
 
     const timestamp = Date.now()
-    const points = 50
+    const points = 30
 
     student.creds.push({
       points,
