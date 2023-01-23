@@ -59,7 +59,12 @@ function Events() {
           <div className='card-body'>
             <h2 className='card-title'>{event.title}</h2>
             <p>{event.description}</p>
-            <i>Seats Left: {MAX_REG - event.registrations.length}</i>
+            <i>
+              Seats Left:{' '}
+              {MAX_REG - event.registrations.length <= 0
+                ? 0
+                : MAX_REG - event.registrations.length}
+            </i>
             <div className='card-actions justify-end mt-5'>
               <Link
                 to={'/confirm-registration/' + event._id}

@@ -10,7 +10,7 @@ import { QRCodeSVG } from 'qrcode.react'
 
 function Timeline() {
   const registrationNumber = useLocation().pathname.replace('/timeline/', '')
-
+  const capsRegNumber = registrationNumber.toUpperCase()
   const { registrationNumber: loggedInRegNumber, logout } =
     useContext(authContext)
 
@@ -61,7 +61,7 @@ function Timeline() {
               </div>
               <div className='flex justify-center flex-between items-center w-full mx-auto pb-5'>
                 <QRCodeSVG
-                  value={registrationNumber}
+                  value={capsRegNumber}
                   size={200}
                   imageSettings={{
                     src: 'logo.png',
