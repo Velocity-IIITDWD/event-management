@@ -180,6 +180,8 @@ exports.isStudentRegistered = async (req, res, next) => {
   const registrationNumber = req.params.registrationNumber
 
   try {
+    registrationNumber.toUpperCase()
+
     const event = await Event.findById(eventId)
 
     if (!event) {
