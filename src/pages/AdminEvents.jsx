@@ -85,6 +85,12 @@ function Events() {
                 >
                   View Registrations
                 </Link>
+                <Link
+                  to={'/admin/verify/' + event._id}
+                  className='btn btn-secondary btn-outline'
+                >
+                  Verify
+                </Link>
                 <button
                   className='btn btn-error btn-outline'
                   onClick={() => {
