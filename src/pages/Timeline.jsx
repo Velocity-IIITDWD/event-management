@@ -6,6 +6,8 @@ import { useLocation, Navigate } from 'react-router-dom'
 
 import TimelineComponent from '../components/TimelineComponent'
 
+import { QRCodeSVG } from 'qrcode.react'
+
 function Timeline() {
   const registrationNumber = useLocation().pathname.replace('/timeline/', '')
 
@@ -45,17 +47,29 @@ function Timeline() {
       {student && (
         <>
           {loggedInRegNumber === registrationNumber && (
-            <div className='flex justify-end flex-between items-center w-full mx-auto pb-5'>
-              <div>
-                <button
-                  type='button'
-                  className='text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2'
-                  onClick={handleLogout}
-                >
-                  Logout
-                </button>
+            <>
+              <div className='flex justify-end flex-between items-center w-full mx-auto pb-5'>
+                <div>
+                  <button
+                    type='button'
+                    className='text-white bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-4 focus:ring-red-300 font-medium rounded-full text-sm px-5 py-2.5 text-center mr-2 mb-2'
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </div>
               </div>
-            </div>
+              <div className='flex justify-center flex-between items-center w-full mx-auto pb-5'>
+                <QRCodeSVG
+                  value={registrationNumber}
+                  size={200}
+                  imageSettings={{
+                    src: 'logo.png',
+                  }}
+                  className='mx-10'
+                />
+              </div>
+            </>
           )}
           <div className='stats shadow mt-5 mb-10 mx-auto w-full'>
             <div className='stat place-items-center'>

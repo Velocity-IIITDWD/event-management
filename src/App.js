@@ -25,6 +25,7 @@ import ManageCreds from './pages/ManageCreds'
 import ConfirmRegistration from './components/Events/ConfirmRegistration'
 import LoginToContinue from './components/LoginToContinue'
 import CredQrCode from './pages/CredQrCode'
+import VerifyEventRegistrations from './components/Admin/VerifyEventRegistrations'
 
 function App() {
   const {
@@ -89,6 +90,10 @@ function App() {
             <Route
               path='/admin/students/:registrationNumber'
               element={<ManageStudents />}
+            />
+            <Route
+              path='/admin/verify/:eventId'
+              element={<VerifyEventRegistrations />}
             />
             <Route path='/admin/creds' element={<ManageCreds />} />
             <Route

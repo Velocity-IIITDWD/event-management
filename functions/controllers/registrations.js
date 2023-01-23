@@ -2,7 +2,7 @@ const Student = require('../models/student')
 const Event = require('../models/event')
 
 exports.registerEvent = async (req, res, next) => {
-  const LIMIT_REGISTRATIONS = 140
+  const LIMIT_REGISTRATIONS = 120
 
   const eventId = req.params.eventId
   const studentId = req.studentId
@@ -166,6 +166,46 @@ exports.registrations = async (req, res, next) => {
     res.status(200).json({
       message: 'Registrations Fetched',
       registrations: event.registrations,
+    })
+  } catch (err) {
+    if (!err.statusCode) {
+      err.statusCode = 500
+    }
+    next(err)
+  }
+}
+
+exports.isStudentRegistered = async (req, res, next) => {
+  const eventId = req.params.eventId
+  const registrationNumber = req.params.registrationNumber
+
+  try {
+    const event = await Event.findById(eventId)
+
+    if (!event) {
+      const error = new Error('Could not find event.')
+      error.statusCode = 404
+      return next(error)
+    }
+
+    const student = await Student.findOne({ registrationNumber })
+
+    if (!student) {
+      const error = new Error('Could not find student.')
+      error.statusCode = 404
+      return next(error)
+    }
+
+    let isRegistered = false
+
+    if (event.registrations.indexOf(student._id) !== -1) {
+      isRegistered = true
+    }
+
+    res.status(200).json({
+      message: 'Status Fetched',
+      isRegistered,
+      name: student.name,
     })
   } catch (err) {
     if (!err.statusCode) {
