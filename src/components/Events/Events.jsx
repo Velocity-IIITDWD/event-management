@@ -70,12 +70,12 @@ function Events() {
                 to={'/confirm-registration/' + event._id}
                 className={`btn btn-accent ${
                   event.registrations.indexOf(studentId) !== -1 ||
-                  MAX_REG - event.registrations.length === 0
+                  MAX_REG - event.registrations.length <= 0
                     ? 'btn-disabled'
                     : 'btn-outline '
                 }`}
               >
-                {MAX_REG - event.registrations.length === 0 ? (
+                {MAX_REG - event.registrations.length <= 0 ? (
                   'Full'
                 ) : (
                   <>
