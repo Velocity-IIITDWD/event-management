@@ -2,7 +2,7 @@ const Student = require('../models/student')
 const Event = require('../models/event')
 
 exports.registerEvent = async (req, res, next) => {
-  const LIMIT_REGISTRATIONS = 120
+  const LIMIT_REGISTRATIONS = 140
 
   const eventId = req.params.eventId
   const studentId = req.studentId
