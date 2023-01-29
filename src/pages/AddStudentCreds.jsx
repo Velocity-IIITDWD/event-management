@@ -137,7 +137,6 @@ function AddStudentCreds() {
           id='Challenge Name'
           class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-5'
           placeholder='Challenge Name'
-          required
           value={challengeName}
           onChange={e => setChallengeName(e.target.value)}
         />
@@ -146,7 +145,6 @@ function AddStudentCreds() {
           id='Challenge Points'
           class='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 mt-5'
           placeholder='Challenge Points'
-          required
           value={challengePoints}
           onChange={e => setChallengePoints(e.target.value)}
         />
