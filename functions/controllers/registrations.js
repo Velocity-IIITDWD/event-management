@@ -2,8 +2,6 @@ const Student = require('../models/student')
 const Event = require('../models/event')
 
 exports.registerEvent = async (req, res, next) => {
-  const LIMIT_REGISTRATIONS = 120
-
   const eventId = req.params.eventId
   const studentId = req.studentId
 
@@ -21,11 +19,11 @@ exports.registerEvent = async (req, res, next) => {
       return next(error)
     }
 
-    if (event.registrations.length >= LIMIT_REGISTRATIONS) {
-      const error = new Error('Registrations for this event are full.')
-      error.statusCode = 402
-      return next(error)
-    }
+    // if (event.registrations.length >= event.maxRegistrations) {
+    //   const error = new Error('Registrations for this event are full.')
+    //   error.statusCode = 402
+    //   return next(error)
+    // }
 
     if (event.isRegistrationOpen) {
       if (event.registrations.indexOf(studentId) !== -1) {

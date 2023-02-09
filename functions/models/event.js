@@ -24,6 +24,9 @@ const eventSchema = new Schema(
       required: true,
       default: true,
     },
+    maxRegistrations: {
+      type: Number,
+    },
     registrations: [
       {
         type: Schema.Types.ObjectId,

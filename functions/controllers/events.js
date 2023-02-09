@@ -48,6 +48,7 @@ exports.createEvent = async (req, res, next) => {
   const imgUrl = req.body.imgUrl
   const registrationPoints = req.body.registrationPoints
   const isRegistrationOpen = req.body.isRegistrationOpen
+  const maxRegistrations = req.body.maxRegistrations
 
   const event = new Event({
     title,
@@ -55,6 +56,7 @@ exports.createEvent = async (req, res, next) => {
     imgUrl,
     registrationPoints,
     isRegistrationOpen,
+    maxRegistrations,
   })
 
   try {
@@ -84,6 +86,7 @@ exports.updateEvent = async (req, res, next) => {
   const imgUrl = req.body.imgUrl
   const registrationPoints = req.body.registrationPoints
   const isRegistrationOpen = req.body.isRegistrationOpen
+  const maxRegistrations = req.body.maxRegistrations
 
   try {
     const event = await Event.findById(eventId)
@@ -98,6 +101,7 @@ exports.updateEvent = async (req, res, next) => {
     event.imgUrl = imgUrl
     event.registrationPoints = registrationPoints
     event.isRegistrationOpen = isRegistrationOpen
+    event.maxRegistrations = maxRegistrations
 
     const result = await event.save()
     res.status(201).json({ message: 'Event updated!', event: result })
