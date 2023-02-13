@@ -12,6 +12,8 @@ function NewEvent() {
   const [imgUrl, setImgUrl] = useState('')
   const [points, setPoints] = useState('')
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(true)
+
+  const [isHidden, setIsHidden] = useState(false)
   const [maxRegistrations, setMaxRegistrations] = useState(null)
 
   const [registrationSuccess, setRegistrationSuccess] = useState(false)
@@ -31,6 +33,7 @@ function NewEvent() {
       setPoints(data.event.registrationPoints)
       setIsRegistrationOpen(data.event.isRegistrationOpen)
       setMaxRegistrations(data.event.maxRegistrations)
+      setIsHidden(data.event.isHidden)
     }
   }, [endpoint])
 
@@ -55,6 +58,7 @@ function NewEvent() {
           registrationPoints: parseInt(points),
           isRegistrationOpen,
           maxRegistrations,
+          isHidden,
         }),
       })
       const data = await response.json()
@@ -172,6 +176,16 @@ function NewEvent() {
             className='checkbox mx-5'
             checked={isRegistrationOpen}
             onChange={() => setIsRegistrationOpen(!isRegistrationOpen)}
+          />
+        </div>
+
+        <div className='form-control w-full mb-5 flex flex-row'>
+          <span className=''>Event Hidden?</span>
+          <input
+            type='checkbox'
+            className='checkbox mx-5'
+            checked={isHidden}
+            onChange={() => setIsHidden(!isHidden)}
           />
         </div>
 

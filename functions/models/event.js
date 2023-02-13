@@ -24,6 +24,11 @@ const eventSchema = new Schema(
       required: true,
       default: true,
     },
+    isHidden: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
     maxRegistrations: {
       type: Number,
     },

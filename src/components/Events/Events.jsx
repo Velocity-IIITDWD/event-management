@@ -18,7 +18,13 @@ function Events() {
       const data = await response.json()
       // console.log(data)
       if (response.status === 200) {
-        setEvents(data.events)
+        let e = data.events
+
+        e = e.filter(ev => {
+          return !ev.isHidden
+        })
+        console.log(e)
+        setEvents(e)
         setIsLoading(false)
       }
     }
