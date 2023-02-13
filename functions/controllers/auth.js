@@ -25,7 +25,7 @@ exports.signup = async (req, res, next) => {
 
     if (isStudent) {
       const error = new Error('Student already exists.')
-      error.statusCode = 401
+      error.statusCode = 402
       throw error
     }
 
@@ -84,14 +84,14 @@ exports.login = async (req, res, next) => {
 
     if (!student) {
       const error = new Error('Invalid registration number.')
-      error.statusCode = 401
+      error.statusCode = 402
       throw error
     }
     const isEqual = await bcrypt.compare(password.toString(), student.password)
 
     if (!isEqual) {
       const error = new Error('Invalid password.')
-      error.statusCode = 401
+      error.statusCode = 402
       throw error
     }
 

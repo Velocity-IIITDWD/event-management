@@ -5,7 +5,7 @@ import { authContext } from '../../store/authContext'
 import { Link, useLocation, Navigate } from 'react-router-dom'
 
 function ConfirmRegistration() {
-  const { isAuthenticated, studentId } = useContext(authContext)
+  const { isAuthenticated, studentId, logout } = useContext(authContext)
 
   const eventId = useLocation().pathname.split('/')[2]
 
@@ -44,6 +44,12 @@ function ConfirmRegistration() {
         },
       }
     )
+
+    if (response.status === 401 || response.status === 403) {
+      alert('Your session expired. Kindly login again.')
+      logout()
+      return
+    }
 
     if (response.status > 200 && response.status < 300) {
       // console.log(data)
