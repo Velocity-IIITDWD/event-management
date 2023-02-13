@@ -14,7 +14,11 @@ function Events() {
     const data = await response.json()
 
     if (response.status === 200) {
-      setEvents(data.events)
+      setEvents(
+        data.events.sort((a, b) => {
+          return new Date(b.createdAt) - new Date(a.createdAt)
+        })
+      )
     }
   }, [])
 

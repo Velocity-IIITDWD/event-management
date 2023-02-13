@@ -18,13 +18,19 @@ function Events() {
       const data = await response.json()
       // console.log(data)
       if (response.status === 200) {
-        let e = data.events
+        let events = [...data.events]
 
-        e = e.filter(ev => {
-          return !ev.isHidden
-        })
-        console.log(e)
-        setEvents(e)
+        console.log(events)
+
+        events = events
+          .filter(ev => {
+            return !ev.isHidden
+          })
+          .sort((a, b) => {
+            return new Date(b.createdAt) - new Date(a.createdAt)
+          })
+
+        setEvents(events)
         setIsLoading(false)
       }
     }
