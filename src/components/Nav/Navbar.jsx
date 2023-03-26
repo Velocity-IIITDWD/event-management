@@ -31,24 +31,24 @@ function Navbar() {
   return (
     <nav className='navbar bg-base-100 px-10'>
       <div className='flex-none'>
-        <Link to={'/'} className='btn btn-ghost btn-circle avatar'>
+        <a href='https://velocityclub.live/' className='btn btn-ghost btn-circle avatar'>
           <div className='w-10 rounded-full'>
             <img
               src={process.env.PUBLIC_URL + '/logo.svg'}
               alt='Velocity Logo'
             />
           </div>
-        </Link>
+        </a>
       </div>
       <div className='flex-1'>
-        <Link
-          to={'/'}
+        <a
+          href='https://velocityclub.live/'
           className={`btn btn-ghost normal-case text-xl ${
             type === 'admin' ? 'hidden md:inline-flex' : 'inline-flex'
           }`}
         >
           Velocity Events
-        </Link>
+        </a>
       </div>
       {isAuthenticated && type === 'admin' && (
         <Link to={'/admin'} className='btn btn-ghost normal-case text-xl'>
