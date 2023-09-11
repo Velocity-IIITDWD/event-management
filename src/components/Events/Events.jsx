@@ -81,9 +81,7 @@ function Events() {
               <Link
                 to={'/confirm-registration/' + event._id}
                 className={`btn btn-accent ${
-                  event.registrations.indexOf(studentId) !== -1 ||
-                  (event.maxRegistrations - event.registrations.length) &
-                    (event.maxRegistrations <= 0)
+                  event.registrations.indexOf(studentId) !== -1
                     ? 'btn-disabled'
                     : 'btn-outline '
                 }`}
